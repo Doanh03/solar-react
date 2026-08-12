@@ -47,7 +47,7 @@ function Projects() {
                 </button>
             </div>
 
-            <div id="allPronjectCards">
+            <div id="allProjectCards">
                 {duAnHienThi.map(function(duAn,index) {
                     return (
                         <ProjectCard
