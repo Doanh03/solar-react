@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useMemo, useState } from 'react';
-import { captureAttribution } from '@/app/lib/attribution';
+import { getAttributionFromSearch } from '@/app/lib/attribution';
 import { scoreLead } from '@/app/lib/lead-scoring';
 
 type PropertyType = 'home' | 'factory' | 'office' | 'shop' | 'farm';
@@ -55,8 +55,8 @@ export function LeadSection() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const attribution = captureAttribution(
-      typeof window !== 'undefined' ? Object.fromEntries(new URLSearchParams(window.location.search)) : {},
+    const attribution = getAttributionFromSearch(
+      typeof window !== 'undefined' ? window.location.search : '',
       typeof window !== 'undefined' ? window.location.pathname : '/',
       typeof document !== 'undefined' ? document.referrer : '',
     );
