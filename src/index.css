@@ -1,4 +1,1 @@
-body {
-  margin: 0;
-  padding: 0;
-}
+html,body,#root{min-height:100%;width:100%}body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}::selection{background:#b9f36b;color:#102019}
