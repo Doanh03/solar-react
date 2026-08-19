@@ -1,8 +1,9 @@
 'use client';
 
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { getAttributionFromSearch } from '@/app/lib/attribution';
 import { scoreLead } from '@/app/lib/lead-scoring';
+import { trackEvent } from '@/app/lib/analytics';
 
 type PropertyType = 'home' | 'factory' | 'office' | 'shop' | 'farm';
 type SolarType = 'grid-tied' | 'hybrid' | 'battery';
@@ -34,21 +35,31 @@ export function LeadSection() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [formStarted, setFormStarted] = useState(false);
 
-  const score = useMemo(
-    () => scoreLead({
-      monthlyBill,
-      propertyType,
-      roofAreaM2,
-      solarType,
-      calculatorUsed: true,
-      phoneProvided: phone.trim().length > 0,
-    }),
-    [monthlyBill, propertyType, roofAreaM2, solarType, phone],
-  );
+  const score = scoreLead({
+    monthlyBill,
+    propertyType,
+    roofAreaM2,
+    solarType,
+    calculatorUsed: true,
+    phoneProvided: phone.trim().length > 0,
+  });
+
+  function markFormStarted() {
+    if (formStarted) return;
+    setFormStarted(true);
+    trackEvent('lead_form_started', { section: 'lead_form', form_version: 'v1' });
+  }
 
   function next() {
-    setStep((current) => Math.min(4, current + 1));
+    markFormStarted();
+    trackEvent('lead_form_step_completed', { section: 'lead_form', step, form_version: 'v1' });
+    const nextStep = Math.min(4, step + 1);
+    setStep(nextStep);
+    if (nextStep === 4) {
+      trackEvent('lead_phone_reached', { section: 'lead_form', step: 4, form_version: 'v1' });
+    }
   }
 
   function back() {
@@ -57,6 +68,7 @@ export function LeadSection() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    markFormStarted();
     setSubmitting(true);
     setError('');
 
@@ -82,8 +94,15 @@ export function LeadSection() {
         }),
       });
 
-      const result = (await response.json()) as { error?: string };
+      const result = (await response.json()) as { error?: string; lead?: { id?: string } };
       if (!response.ok) throw new Error(result.error ?? 'Không thể gửi thông tin');
+      trackEvent('lead_submitted', {
+        section: 'lead_form',
+        form_version: 'v1',
+        lead_id: result.lead?.id,
+        property_type: propertyType,
+        calculator_used: true,
+      });
       setSubmitted(true);
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Không thể gửi thông tin. Vui lòng thử lại.');
@@ -97,14 +116,21 @@ export function LeadSection() {
       <div>
         <span className="eyebrow">Tư vấn cá nhân hóa</span>
         <h2>Cho chúng tôi biết một chút về công trình của bạn</h2>
-        <p>Trả lời nhanh vài câu hỏi để Sale hiểu nhu cầu trước khi gọi. Kết quả chỉ dùng để ưu tiên tư vấn, không thay thế khảo sát thực tế.</p>
+        <p>Trả lời vài câu hỏi để đội ngũ tư vấn hiểu nhu cầu trước khi gọi. Bạn sẽ nhận được cấu hình tham khảo, mức tiết kiệm ước tính và gợi ý hệ thống phù hợp.</p>
+        <div className="form-value-promise">
+          <span>✓ Công suất đề xuất</span>
+          <span>✓ Ước tính tiết kiệm</span>
+          <span>✓ Gợi ý loại hệ thống</span>
+          <span>✓ Tư vấn theo công trình</span>
+        </div>
       </div>
 
-      <form className="lead-form" onSubmit={handleSubmit}>
+      <form className="lead-form" onSubmit={handleSubmit} onFocus={markFormStarted}>
         <div className="form-progress" aria-label={`Bước ${step} trên 4`}>
           <strong>Bước {step}/4</strong>
           <span>{Math.round((step / 4) * 100)}%</span>
         </div>
+        <p className="form-time-note">Chỉ vài bước để nhận kết quả ước tính.</p>
 
         {step === 1 && (
           <fieldset>
@@ -152,10 +178,7 @@ export function LeadSection() {
             <legend>Nhận kết quả và tư vấn chi tiết</legend>
             <input name="name" aria-label="Họ và tên" placeholder="Họ và tên" autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} required />
             <input name="phone" aria-label="Số điện thoại" placeholder="Số điện thoại" inputMode="tel" autoComplete="tel" value={phone} onChange={(event) => setPhone(event.target.value)} required />
-            <div className="lead-score-preview" aria-live="polite">
-              <strong>Ưu tiên tư vấn: {score.temperature === 'hot' ? 'HOT' : score.temperature === 'warm' ? 'WARM' : 'COLD'}</strong>
-              <span>Score nội bộ: {score.score}/100</span>
-            </div>
+            <p className="lead-form-note">Thông tin liên hệ chỉ được dùng để tư vấn cho yêu cầu này.</p>
             {error && <p role="alert">{error}</p>}
             <button className="button button-primary full-width" type="submit" disabled={submitting}>
               {submitting ? 'Đang gửi...' : 'Nhận tư vấn'}
