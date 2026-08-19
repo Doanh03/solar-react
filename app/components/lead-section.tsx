@@ -32,6 +32,8 @@ export function LeadSection() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const score = useMemo(
     () => scoreLead({
@@ -53,26 +55,41 @@ export function LeadSection() {
     setStep((current) => Math.max(1, current - 1));
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setSubmitting(true);
+    setError('');
+
     const attribution = getAttributionFromSearch(
       typeof window !== 'undefined' ? window.location.search : '',
       typeof window !== 'undefined' ? window.location.pathname : '/',
       typeof document !== 'undefined' ? document.referrer : '',
     );
 
-    // Phase 2 will persist this payload through the Lead API/database.
-    console.info('lead_capture', {
-      name: name.trim(),
-      phone: phone.trim(),
-      propertyType,
-      monthlyBill,
-      roofAreaM2,
-      solarType,
-      leadScore: score,
-      attribution,
-    });
-    setSubmitted(true);
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          phone: phone.trim(),
+          propertyType,
+          monthlyBill,
+          roofAreaM2,
+          solarType,
+          calculatorUsed: true,
+          attribution,
+        }),
+      });
+
+      const result = (await response.json()) as { error?: string };
+      if (!response.ok) throw new Error(result.error ?? 'Không thể gửi thông tin');
+      setSubmitted(true);
+    } catch (submissionError) {
+      setError(submissionError instanceof Error ? submissionError.message : 'Không thể gửi thông tin. Vui lòng thử lại.');
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -139,18 +156,21 @@ export function LeadSection() {
               <strong>Ưu tiên tư vấn: {score.temperature === 'hot' ? 'HOT' : score.temperature === 'warm' ? 'WARM' : 'COLD'}</strong>
               <span>Score nội bộ: {score.score}/100</span>
             </div>
-            <button className="button button-primary full-width" type="submit">Nhận tư vấn</button>
+            {error && <p role="alert">{error}</p>}
+            <button className="button button-primary full-width" type="submit" disabled={submitting}>
+              {submitting ? 'Đang gửi...' : 'Nhận tư vấn'}
+            </button>
           </fieldset>
         )}
 
         {submitted && (
           <div role="status">
             <strong>Đã ghi nhận thông tin.</strong>
-            <p>Hệ thống đã tạo dữ liệu Lead và attribution ở phía trình duyệt. Lead API/database sẽ được kết nối ở Phase 2.</p>
+            <p>Thông tin đã được lưu để đội ngũ tư vấn tiếp nhận. Kết quả trên website chỉ mang tính tham khảo.</p>
           </div>
         )}
 
-        {!submitted && step > 1 && <button className="button button-secondary" type="button" onClick={back}>Quay lại</button>}
+        {!submitted && step > 1 && <button className="button button-secondary" type="button" onClick={back} disabled={submitting}>Quay lại</button>}
         {!submitted && step < 4 && <button className="button button-primary" type="button" onClick={next}>Tiếp tục</button>}
       </form>
     </section>
