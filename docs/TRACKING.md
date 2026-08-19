@@ -23,39 +23,52 @@ utm_content
 utm_term
 ```
 
-Persist first-touch values for the session/visitor and pass both first-touch and last-touch attribution into the lead record.
+The frontend stores first-touch UTM values in `sessionStorage` under a versioned key and includes both first-touch and current last-touch UTM context in client analytics events. This does not change the existing `/api/leads` attribution contract; extending the database to store separate first/last-touch attribution is a later data-model change.
 
-## Core events
+## Event taxonomy V1
 
 ```text
-page_view
-view_solution
+hero_cta_clicked
 calculator_started
 calculator_completed
 lead_form_started
-lead_step_completed
+lead_form_step_completed
+lead_phone_reached
 lead_submitted
-hotline_clicked
-quote_requested
+mobile_sticky_cta_impression
+mobile_sticky_cta_click
 ```
 
 Recommended event properties:
 
+- `event_version`
 - page/path
-- source/medium/campaign
-- calculator result version
-- property type
-- lead score only after submission
+- section
+- `cta_id` where applicable
+- device
+- first-touch UTM values
+- last-touch UTM values
+- calculator version/result context
+- property type where relevant
+- `lead_id` only after successful submission
 
-Never send raw phone numbers, email addresses, access tokens, API keys or other secrets into client analytics events.
+Never send raw phone numbers, email addresses, names, access tokens, API keys or other secrets into client analytics events. Lead Score remains server-side Sales Intelligence and is never exposed in customer-facing analytics.
 
-## Conversion definitions
+## Funnel definitions
 
-Primary:
+```text
+hero_cta_clicked
+    -> calculator_started
+    -> calculator_completed
+    -> lead_form_started
+    -> lead_form_step_completed
+    -> lead_phone_reached
+    -> lead_submitted
+```
+
+Primary business conversion:
 
 - `lead_submitted`
-- `quote_requested`
-- `hotline_clicked`
 
 Business conversions are recorded server-side later:
 
@@ -68,7 +81,7 @@ Business conversions are recorded server-side later:
 ## Reporting chain
 
 ```text
-Traffic -> Lead -> Qualified -> Survey -> Quote -> Won -> Revenue
+Traffic -> Engagement -> Lead -> Qualified -> Survey -> Quote -> Won -> Revenue
 ```
 
 This enables CPL, CPQL, CPA, conversion rate, ROAS and CAC calculations once cost and revenue data are available.
