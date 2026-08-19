@@ -2,7 +2,6 @@
 
 import { FormEvent, useState } from 'react';
 import { getAttributionFromSearch } from '@/app/lib/attribution';
-import { scoreLead } from '@/app/lib/lead-scoring';
 import { trackEvent } from '@/app/lib/analytics';
 
 type PropertyType = 'home' | 'factory' | 'office' | 'shop' | 'farm';
@@ -36,15 +35,6 @@ export function LeadSection() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [formStarted, setFormStarted] = useState(false);
-
-  const score = scoreLead({
-    monthlyBill,
-    propertyType,
-    roofAreaM2,
-    solarType,
-    calculatorUsed: true,
-    phoneProvided: phone.trim().length > 0,
-  });
 
   function markFormStarted() {
     if (formStarted) return;
