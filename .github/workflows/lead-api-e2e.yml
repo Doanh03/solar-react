@@ -1,0 +1,46 @@
+name: Lead API E2E
+
+on:
+  push:
+    branches: [main, 'feature/**']
+  pull_request:
+
+jobs:
+  lead-api-e2e:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      E2E_BASE_URL: http://127.0.0.1:3000
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Verify DATABASE_URL is configured
+        run: test -n "$DATABASE_URL"
+
+      - name: Bootstrap PostgreSQL schema
+        run: node scripts/ensure-db-schema.mjs
+
+      - name: Build
+        run: npm run build
+
+      - name: Start Next.js
+        run: npm run start > /tmp/solar-next.log 2>&1 &
+
+      - name: Wait for app
+        run: curl --retry 30 --retry-delay 2 --retry-connrefused --fail http://127.0.0.1:3000/
+
+      - name: Run Lead API PostgreSQL E2E
+        run: node scripts/e2e-leads.mjs
+
+      - name: Print server log on failure
+        if: failure()
+        run: cat /tmp/solar-next.log
