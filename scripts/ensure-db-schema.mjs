@@ -1,5 +1,9 @@
 import { readFile } from 'node:fs/promises';
-import { getDb } from '../app/lib/db.js';
+import pg from 'pg';
+
+const { Pool } = pg;
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) throw new Error('DATABASE_URL is not configured');
 
 const schema = await readFile(new URL('../db/schema.sql', import.meta.url), 'utf8');
 const statements = schema
@@ -7,12 +11,12 @@ const statements = schema
   .map((statement) => statement.trim())
   .filter(Boolean);
 
-const db = getDb();
+const pool = new Pool({ connectionString });
 try {
   for (const statement of statements) {
-    await db.query(statement);
+    await pool.query(statement);
   }
   console.log(`Database schema ready (${statements.length} statements)`);
 } finally {
-  await db.end();
+  await pool.end();
 }
