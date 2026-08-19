@@ -1,6 +1,7 @@
 import { SolarCalculator } from '@/app/components/solar-calculator';
 import { HeroSection } from '@/app/components/hero-section';
 import { LeadSection } from '@/app/components/lead-section';
+import { MobileStickyCta } from '@/app/components/mobile-sticky-cta';
 import { ProjectsSection } from '@/app/components/projects-section';
 import { SiteFooter } from '@/app/components/site-footer';
 import { SiteHeader } from '@/app/components/site-header';
@@ -16,6 +17,7 @@ export default function HomePage() {
       <ProjectsSection />
       <LeadSection />
       <SiteFooter />
+      <MobileStickyCta />
     </main>
   );
 }
