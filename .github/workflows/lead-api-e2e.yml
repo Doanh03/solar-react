@@ -26,6 +26,9 @@ jobs:
       - name: Verify DATABASE_URL is configured
         run: test -n "$DATABASE_URL"
 
+      - name: Bootstrap PostgreSQL schema
+        run: node scripts/ensure-db-schema.mjs
+
       - name: Build
         run: npm run build
 
