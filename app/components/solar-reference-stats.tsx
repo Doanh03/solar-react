@@ -60,9 +60,11 @@ export function SolarReferenceStats() {
       node.dataset.referenceHidden = 'true';
       node.style.display = 'none';
     });
-    setTarget(commandCard);
+
+    const frame = requestAnimationFrame(() => setTarget(commandCard));
 
     return () => {
+      cancelAnimationFrame(frame);
       commandCard.querySelectorAll<HTMLElement>('[data-reference-hidden="true"]').forEach((node) => {
         node.style.display = '';
         delete node.dataset.referenceHidden;
