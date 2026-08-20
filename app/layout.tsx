@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import './business-motion.css';
+import './hero-electric.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://solar-react-swart.vercel.app'),
