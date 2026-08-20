@@ -43,7 +43,7 @@ export default function HeroV2() {
         <p>Giải pháp điện mặt trời thông minh cho gia đình, doanh nghiệp và nhà xưởng.</p>
       </div>
 
-      <div className={styles.planetStage} aria-label="Energy Planet">
+      <div className={`${styles.planetStage} ${activeNode ? styles.stageActive : ""}`} data-active={activeNode ?? "idle"} aria-label="Energy Planet">
         <div className={styles.atmosphere} />
         <div className={styles.planet}>
           <div className={styles.terminator} />
@@ -51,9 +51,12 @@ export default function HeroV2() {
           <div className={styles.core} />
           <span className={`${styles.orbit} ${styles.orbitA}`} />
           <span className={`${styles.orbit} ${styles.orbitB}`} />
-          <span className={`${styles.particle} ${styles.particleA}`} />
-          <span className={`${styles.particle} ${styles.particleB}`} />
         </div>
+
+        <span className={`${styles.energyParticle} ${styles.energyHome}`} aria-hidden="true" />
+        <span className={`${styles.energyParticle} ${styles.energyFactory}`} aria-hidden="true" />
+        <span className={`${styles.energyParticle} ${styles.energyBattery}`} aria-hidden="true" />
+        <span className={`${styles.energyParticle} ${styles.energyGrid}`} aria-hidden="true" />
 
         {nodes.map((node) => (
           <div key={node} className={`${styles.node} ${activeNode === node ? styles.nodeActive : ""} ${styles[`node${node}`]}`}>
