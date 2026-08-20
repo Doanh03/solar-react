@@ -3,13 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./hero-v2.module.css";
 
-type Metric = {
-  label: string;
-  value: number;
-  unit: string;
-  step: number;
-};
-
+type Metric = { label: string; value: number; unit: string; step: number };
 const baseMetrics: Metric[] = [
   { label: "Công suất lắp đặt", value: 202580.6, unit: "kWp", step: 0.1 },
   { label: "Tổng sản lượng tiêu thụ khách hàng", value: 1366671, unit: "kWh", step: 1 },
@@ -17,11 +11,9 @@ const baseMetrics: Metric[] = [
   { label: "Doanh thu hôm nay", value: 1.95, unit: "tỷ", step: 0.01 },
   { label: "CO₂ giảm phát thải hôm nay", value: 433.2, unit: "tấn", step: 0.1 },
 ];
-
 const nodes = ["HOME", "FACTORY", "BATTERY", "GRID"] as const;
-const START_OUTPUT = 639_772;
-
 type Node = (typeof nodes)[number];
+const START_OUTPUT = 639_772;
 
 function formatMetric(value: number, step: number) {
   return step < 1
@@ -32,7 +24,7 @@ function formatMetric(value: number, step: number) {
 export default function HeroV2() {
   const [activeNode, setActiveNode] = useState<Node | null>(null);
   const [metrics, setMetrics] = useState<number[]>(() => baseMetrics.map((metric) => metric.value));
-  const [output, setOutput] = useState<number>(START_OUTPUT);
+  const [output, setOutput] = useState(START_OUTPUT);
   const [pulse, setPulse] = useState(0);
 
   useEffect(() => {
@@ -47,26 +39,22 @@ export default function HeroV2() {
     let nodeIndex = 0;
     let travelTimer: number | undefined;
     let pauseTimer: number | undefined;
-
     const clearTimers = () => {
       if (travelTimer !== undefined) window.clearTimeout(travelTimer);
       if (pauseTimer !== undefined) window.clearTimeout(pauseTimer);
     };
-
     const run = () => {
       const node = nodes[nodeIndex];
       setActiveNode(null);
       setPulse((value) => value + 1);
-
       travelTimer = window.setTimeout(() => {
         setActiveNode(node);
         pauseTimer = window.setTimeout(() => {
           nodeIndex = (nodeIndex + 1) % nodes.length;
           run();
         }, 1300);
-      }, 1100);
+      }, 1650);
     };
-
     run();
     return clearTimers;
   }, []);
@@ -78,7 +66,6 @@ export default function HeroV2() {
         <h1 id="hero-v2-title">Năng lượng sạch cho một tương lai bền vững.</h1>
         <p>Giải pháp điện mặt trời thông minh cho gia đình, doanh nghiệp và nhà xưởng.</p>
       </div>
-
       <div className={styles.planetStage} data-active={activeNode ?? "idle"} data-pulse={pulse} aria-label="Energy Planet">
         <div className={styles.atmosphere} />
         <div className={styles.planet}>
@@ -88,11 +75,9 @@ export default function HeroV2() {
           <span className={`${styles.orbit} ${styles.orbitA}`} />
           <span className={`${styles.orbit} ${styles.orbitB}`} />
         </div>
-
         {Array.from({ length: 7 }, (_, index) => (
-          <span key={index} className={styles.energyTrailParticle} style={{ ["--trail-delay" as string]: `${index * 90}ms` }} aria-hidden="true" />
+          <span key={index} className={styles.energyTrailParticle} style={{ ["--trail-delay" as string]: `${index * 80}ms` }} aria-hidden="true" />
         ))}
-
         {nodes.map((node) => (
           <div key={node} className={`${styles.node} ${activeNode === node ? styles.nodeActive : ""} ${styles[`node${node}`]}`}>
             <div className={styles.connection} />
@@ -105,13 +90,11 @@ export default function HeroV2() {
             <span>{node}</span>
           </div>
         ))}
-
         <div className={styles.heroMetric}>
           <strong>{new Intl.NumberFormat("vi-VN").format(output)}</strong><span>kWh</span>
           <small>SẢN LƯỢNG ĐIỆN MẶT TRỜI HÔM NAY</small>
         </div>
       </div>
-
       <div className={styles.dataRail}>
         {baseMetrics.map((metric, index) => (
           <div className={styles.metric} key={metric.label}>
@@ -120,7 +103,6 @@ export default function HeroV2() {
           </div>
         ))}
       </div>
-
       <div className={styles.actions}>
         <a href="#contact">NHẬN TƯ VẤN</a>
         <a href="#calculator">TÍNH TOÁN TIẾT KIỆM</a>
