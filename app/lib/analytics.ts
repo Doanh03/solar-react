@@ -6,10 +6,14 @@ export type AnalyticsEventName =
   | 'lead_form_step_completed'
   | 'lead_phone_reached'
   | 'lead_submitted'
+  | 'lead_success'
   | 'lead_submit_error'
   | 'lead_form_abandoned'
   | 'mobile_sticky_cta_impression'
-  | 'mobile_sticky_cta_click';
+  | 'mobile_sticky_cta_click'
+  | 'contact_zalo_clicked'
+  | 'contact_messenger_clicked'
+  | 'contact_call_clicked';
 
 type AnalyticsPayload = Record<string, string | number | boolean | null | undefined>;
 
@@ -70,10 +74,9 @@ export function trackEvent(eventName: AnalyticsEventName, payload: AnalyticsPayl
   analyticsWindow.dataLayer ??= [];
   analyticsWindow.dataLayer.push(event);
 
-  // Mirror key conversions when the site owner's Meta Pixel is present; the app
-  // remains functional when Pixel is not installed.
-  if (analyticsWindow.fbq && (eventName === 'lead_submitted' || eventName === 'calculator_completed')) {
-    analyticsWindow.fbq('track', eventName === 'lead_submitted' ? 'Lead' : 'CompleteRegistration', {
+  // Mirror the real lead-success conversion to Meta only after /api/leads succeeds.
+  if (analyticsWindow.fbq && (eventName === 'lead_success' || eventName === 'calculator_completed')) {
+    analyticsWindow.fbq('track', eventName === 'lead_success' ? 'Lead' : 'CompleteRegistration', {
       content_name: 'solar-business-site',
       page: window.location.pathname,
     });
