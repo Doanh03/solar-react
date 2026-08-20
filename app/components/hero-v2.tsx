@@ -81,6 +81,29 @@ export default function HeroV2() {
           <span className={`${styles.orbit} ${styles.orbitB}`} />
         </div>
 
+        <svg className={styles.energyNetwork} viewBox="0 0 760 760" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="energyBeam" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stopColor="#5ee7ff" stopOpacity="0" />
+              <stop offset="0.35" stopColor="#5ee7ff" />
+              <stop offset="0.65" stopColor="#ffffff" />
+              <stop offset="1" stopColor="#b777ff" stopOpacity="0.15" />
+            </linearGradient>
+            <filter id="energyGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+          </defs>
+          <path className={`${styles.energyBeam} ${styles.beamHOME}`} d="M380 380 L88 294" />
+          <path className={`${styles.energyBeam} ${styles.beamFACTORY}`} d="M380 380 L702 294" />
+          <path className={`${styles.energyBeam} ${styles.beamBATTERY}`} d="M380 380 L149 631" />
+          <path className={`${styles.energyBeam} ${styles.beamGRID}`} d="M380 380 L619 631" />
+          <circle className={`${styles.energyDot} ${styles.dotHOME}`} r="6"><animateMotion dur="2.1s" repeatCount="indefinite" path="M380 380 L88 294" /></circle>
+          <circle className={`${styles.energyDot} ${styles.dotFACTORY}`} r="6"><animateMotion dur="2.1s" begin=".5s" repeatCount="indefinite" path="M380 380 L702 294" /></circle>
+          <circle className={`${styles.energyDot} ${styles.dotBATTERY}`} r="6"><animateMotion dur="2.1s" begin="1s" repeatCount="indefinite" path="M380 380 L149 631" /></circle>
+          <circle className={`${styles.energyDot} ${styles.dotGRID}`} r="6"><animateMotion dur="2.1s" begin="1.5s" repeatCount="indefinite" path="M380 380 L619 631" /></circle>
+        </svg>
+
         {Array.from({ length: 3 }, (_, index) => (
           <span
             key={`${pulse}-${index}`}
