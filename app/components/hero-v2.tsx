@@ -3,16 +3,25 @@
 import { useEffect, useState } from "react";
 import styles from "./hero-v2.module.css";
 
-const baseMetrics = [
-  ["Công suất lắp đặt", 202580.6, "kWp", 0.1],
-  ["Tổng sản lượng tiêu thụ khách hàng", 1366671, "kWh", 1],
-  ["Điện đang tích trữ", 319852, "kWh", 1],
-  ["Doanh thu hôm nay", 1.95, "tỷ", 0.01],
-  ["CO₂ giảm phát thải hôm nay", 433.2, "tấn", 0.1],
-] as const;
+type Metric = {
+  label: string;
+  value: number;
+  unit: string;
+  step: number;
+};
+
+const baseMetrics: Metric[] = [
+  { label: "Công suất lắp đặt", value: 202580.6, unit: "kWp", step: 0.1 },
+  { label: "Tổng sản lượng tiêu thụ khách hàng", value: 1366671, unit: "kWh", step: 1 },
+  { label: "Điện đang tích trữ", value: 319852, unit: "kWh", step: 1 },
+  { label: "Doanh thu hôm nay", value: 1.95, unit: "tỷ", step: 0.01 },
+  { label: "CO₂ giảm phát thải hôm nay", value: 433.2, unit: "tấn", step: 0.1 },
+];
 
 const nodes = ["HOME", "FACTORY", "BATTERY", "GRID"] as const;
 const START_OUTPUT = 639_772;
+
+type Node = (typeof nodes)[number];
 
 function formatMetric(value: number, step: number) {
   return step < 1
@@ -21,15 +30,15 @@ function formatMetric(value: number, step: number) {
 }
 
 export default function HeroV2() {
-  const [activeNode, setActiveNode] = useState<(typeof nodes)[number] | null>(null);
-  const [metrics, setMetrics] = useState(baseMetrics.map(([, value]) => value));
-  const [output, setOutput] = useState(START_OUTPUT);
+  const [activeNode, setActiveNode] = useState<Node | null>(null);
+  const [metrics, setMetrics] = useState<number[]>(() => baseMetrics.map((metric) => metric.value));
+  const [output, setOutput] = useState<number>(START_OUTPUT);
   const [pulse, setPulse] = useState(0);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
       setOutput((value) => value + 1);
-      setMetrics((values) => values.map((value, index) => value + baseMetrics[index][3]));
+      setMetrics((values) => values.map((value, index) => value + baseMetrics[index].step));
     }, 1000);
     return () => window.clearInterval(interval);
   }, []);
@@ -40,8 +49,8 @@ export default function HeroV2() {
     let pauseTimer: number | undefined;
 
     const clearTimers = () => {
-      if (travelTimer) window.clearTimeout(travelTimer);
-      if (pauseTimer) window.clearTimeout(pauseTimer);
+      if (travelTimer !== undefined) window.clearTimeout(travelTimer);
+      if (pauseTimer !== undefined) window.clearTimeout(pauseTimer);
     };
 
     const run = () => {
@@ -104,10 +113,10 @@ export default function HeroV2() {
       </div>
 
       <div className={styles.dataRail}>
-        {baseMetrics.map(([label, , unit, step], index) => (
-          <div className={styles.metric} key={label}>
-            <strong>{formatMetric(metrics[index], step)}</strong><span>{unit}</span>
-            <small>{label}</small>
+        {baseMetrics.map((metric, index) => (
+          <div className={styles.metric} key={metric.label}>
+            <strong>{formatMetric(metrics[index], metric.step)}</strong><span>{metric.unit}</span>
+            <small>{metric.label}</small>
           </div>
         ))}
       </div>
