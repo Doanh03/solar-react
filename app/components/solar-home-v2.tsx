@@ -1,16 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import type { FormEvent } from 'react';
 import { BusinessFooter, BusinessHeader } from './business-site';
 import styles from './solar-home-v2.module.css';
 
 const stats = [
-  { value: 639672, suffix: ' kWh', label: 'Năng lượng tạo ra hôm nay', tone: 'sun' },
-  { value: 202576, suffix: ' kWp', label: 'Công suất hệ thống tham khảo', tone: 'orange' },
-  { value: 1366616, suffix: ' kWh', label: 'Điện mặt trời có thể tự dùng', tone: 'blue' },
-  { value: 319827, suffix: ' kWh', label: 'Điện năng tích trữ', tone: 'violet' },
-  { value: 433, suffix: ' tấn', label: 'CO₂ giảm phát thải', tone: 'green' },
+  { value: 639672, suffix: ' kWh', label: 'Năng lượng tạo ra hôm nay' },
+  { value: 202576, suffix: ' kWp', label: 'Công suất hệ thống tham khảo' },
+  { value: 1366616, suffix: ' kWh', label: 'Điện mặt trời có thể tự dùng' },
+  { value: 319827, suffix: ' kWh', label: 'Điện năng tích trữ' },
+  { value: 433, suffix: ' tấn', label: 'CO₂ giảm phát thải' },
 ];
 
 function AnimatedNumber({ value }: { value: number }) {
@@ -36,12 +37,12 @@ function AnimatedNumber({ value }: { value: number }) {
 function Earth() {
   return (
     <div className={styles.earthStage} aria-hidden="true">
-      <div className={styles.orbit orbitOne} />
-      <div className={styles.orbit orbitTwo} />
+      <div className={`${styles.orbit} ${styles.orbitOne}`} />
+      <div className={`${styles.orbit} ${styles.orbitTwo}`} />
       <div className={styles.earthGlow} />
       <div className={styles.earth}>
-        <div className={styles.earthGrid gridA} />
-        <div className={styles.earthGrid gridB} />
+        <div className={`${styles.earthGrid} ${styles.gridA}`} />
+        <div className={`${styles.earthGrid} ${styles.gridB}`} />
         <div className={styles.earthLand} />
       </div>
       <span className={`${styles.energyDot} ${styles.dotA}`} />
@@ -147,12 +148,12 @@ export function SolarBusinessHomeV2() {
               <div className={styles.commandCard} id="nang-luong">
                 <div className={styles.commandHeader}><div><span>ENERGY COMMAND CENTER</span><strong>Hệ thống năng lượng của bạn, nhìn thấy được.</strong></div><i>LIVE</i></div>
                 <Earth />
-                <div className={styles.stat statMain}><span>{stats[0].label}</span><strong><AnimatedNumber value={stats[0].value} /><small>{stats[0].suffix}</small></strong><b>ĐANG CẬP NHẬT</b></div>
+                <div className={`${styles.stat} ${styles.statMain}`}><span>{stats[0].label}</span><strong><AnimatedNumber value={stats[0].value} /><small>{stats[0].suffix}</small></strong><b>MÔ PHỎNG CHỈ SỐ</b></div>
                 <div className={`${styles.stat} ${styles.statTL}`}><span>{stats[1].label}</span><strong><AnimatedNumber value={stats[1].value} /><small>{stats[1].suffix}</small></strong></div>
                 <div className={`${styles.stat} ${styles.statTR}`}><span>{stats[2].label}</span><strong><AnimatedNumber value={stats[2].value} /><small>{stats[2].suffix}</small></strong></div>
                 <div className={`${styles.stat} ${styles.statBL}`}><span>{stats[3].label}</span><strong><AnimatedNumber value={stats[3].value} /><small>{stats[3].suffix}</small></strong></div>
                 <div className={`${styles.stat} ${styles.statBR}`}><span>{stats[4].label}</span><strong><AnimatedNumber value={stats[4].value} /><small>{stats[4].suffix}</small></strong></div>
-                <div className={styles.commandFooter}><span>● Mô phỏng chỉ số hệ thống</span><Link href="/lien-he">Nhận cấu hình thực tế →</Link></div>
+                <div className={styles.commandFooter}><span>● Chỉ số minh hoạ • Không phải số liệu thương mại</span><Link href="/lien-he">Nhận cấu hình thực tế →</Link></div>
               </div>
             </div>
           </div>
@@ -167,7 +168,7 @@ export function SolarBusinessHomeV2() {
         <section className={styles.fbSection}><div className="site-shell"><div><span className={styles.kicker}>DÀNH CHO KHÁCH HÀNG TỪ FACEBOOK</span><h2>Vào đúng vấn đề. Hiểu nhanh. Có lý do để ở lại.</h2></div><div className={styles.fbGrid}><div><b>01</b><strong>Không ép báo giá ngay</strong><p>Giải thích nhu cầu trước, giúp khách hiểu mình đang cần gì.</p></div><div><b>02</b><strong>Nội dung theo từng nhu cầu</strong><p>Nhà ở, nhà xưởng, doanh nghiệp và lưu trữ có hành trình tư vấn khác nhau.</p></div><div><b>03</b><strong>CTA xuất hiện đúng lúc</strong><p>Cho khách lựa chọn xem hệ thống, tính nhanh hoặc để lại thông tin.</p></div></div></div></section>
       </main>
       <BusinessFooter />
-      <div className={styles.mobileBar}><a href="https://zalo.me" target="_blank" rel="noreferrer">Zalo</a><a href="tel:" aria-label="Gọi tư vấn">Gọi tư vấn</a><a href="#tu-van">Nhận báo giá</a></div>
+      <div className={styles.mobileBar}><Link href="/lien-he">Zalo / Liên hệ</Link><Link href="/lien-he">Tư vấn</Link><a href="#tu-van">Nhận báo giá</a></div>
     </>
   );
 }
