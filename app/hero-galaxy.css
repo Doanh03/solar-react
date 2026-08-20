@@ -1,0 +1,87 @@
+/* Galaxy energy planet override */
+.commandCard { background: radial-gradient(circle at 50% 52%, rgba(34,26,91,.55), rgba(5,7,24,.98) 58%), linear-gradient(145deg,#090d25,#040612); }
+.commandCard:before { background: radial-gradient(circle at 50% 48%, rgba(75,226,255,.09), transparent 30%), radial-gradient(circle at 50% 52%, rgba(142,65,255,.13), transparent 58%); }
+.earthStage { width: 500px; height: 500px; }
+.earthGlow { width: 410px; height: 410px; background: radial-gradient(circle,rgba(61,218,255,.14),rgba(125,55,255,.08) 38%,transparent 68%); filter: blur(18px); }
+.earth { width: 286px; height: 286px; background: radial-gradient(circle at 32% 27%,#b9ffff 0%,#62e8ff 5%,#3260ff 20%,#251a71 48%,#09051c 73%,#02030d 100%); box-shadow: inset -42px -34px 70px rgba(0,0,0,.78), inset 18px 10px 35px rgba(164,240,255,.22), 0 0 0 1px rgba(137,240,255,.38), 0 0 45px rgba(73,214,255,.22), 0 0 105px rgba(127,65,255,.16); overflow:hidden; animation: galaxyPlanetBreath 5.8s ease-in-out infinite; }
+.earth:before { content:""; position:absolute; inset:-3px; border-radius:50%; background: conic-gradient(from 215deg,transparent 0 38%,rgba(97,238,255,.95) 42%,rgba(199,105,255,.6) 47%,transparent 52% 100%); mix-blend-mode:screen; opacity:.72; animation: terminatorSweep 9s linear infinite; }
+.earth:after { content:""; position:absolute; inset:0; border-radius:50%; background: radial-gradient(ellipse at 66% 35%,rgba(2,3,14,0) 0 32%,rgba(2,3,14,.32) 48%,rgba(1,2,9,.88) 76%), linear-gradient(115deg,transparent 0 46%,rgba(2,3,14,.78) 73%); }
+.earthLand { display:none; }
+.earthGrid { border-color:rgba(132,232,255,.18); }
+.gridA { transform:rotate(22deg) scaleX(.34); animation:galaxyGrid 14s linear infinite; }
+.gridB { transform:rotate(-32deg) scaleX(.58); animation:galaxyGridReverse 19s linear infinite; border-color:rgba(180,111,255,.18); }
+.orbit { width:470px; height:155px; border-color:rgba(78,226,255,.34); box-shadow:0 0 20px rgba(74,220,255,.12); animation:orbitGalaxy 12s linear infinite; }
+.orbitTwo { width:420px; height:420px; border-color:rgba(156,82,255,.18); animation-duration:21s; }
+.energyDot { background:#8df6ff; box-shadow:0 0 12px #8df6ff,0 0 28px rgba(146,73,255,.8); }
+.stat { background:rgba(7,10,26,.72); border-color:rgba(112,227,255,.14); }
+.stat strong small { color:#8df6ff; }
+.statMain { border-color:rgba(156,82,255,.28); background:rgba(9,11,29,.82); }
+.statMain strong { color:#eefaff; }
+.stat b { color:#b8a0ff; }
+.commandFooter a { color:#8df6ff; }
+
+/* Energy arrival: the four node groups are the fifth through eighth SVG groups. */
+.earthStage svg > g:nth-of-type(5) circle:first-child,
+.earthStage svg > g:nth-of-type(6) circle:first-child,
+.earthStage svg > g:nth-of-type(7) circle:first-child,
+.earthStage svg > g:nth-of-type(8) circle:first-child { fill:rgba(5,9,27,.96); stroke:rgba(139,246,255,.42); }
+.earthStage svg > g:nth-of-type(5) circle:nth-of-type(2),
+.earthStage svg > g:nth-of-type(6) circle:nth-of-type(2),
+.earthStage svg > g:nth-of-type(7) circle:nth-of-type(2),
+.earthStage svg > g:nth-of-type(8) circle:nth-of-type(2) { stroke:rgba(155,94,255,.28); }
+.earthStage svg > g:nth-of-type(5) circle:first-child { animation:nodeArrival 2.8s 2.35s infinite; }
+.earthStage svg > g:nth-of-type(6) circle:first-child { animation:nodeArrival 2.8s 3.05s infinite; }
+.earthStage svg > g:nth-of-type(7) circle:first-child { animation:nodeArrival 2.8s 3.75s infinite; }
+.earthStage svg > g:nth-of-type(8) circle:first-child { animation:nodeArrival 2.8s 4.45s infinite; }
+.earthStage svg > g:nth-of-type(5) text,
+.earthStage svg > g:nth-of-type(6) text,
+.earthStage svg > g:nth-of-type(7) text,
+.earthStage svg > g:nth-of-type(8) text { fill:#b8c7e5; }
+.earthStage svg > g:nth-of-type(5) text:first-of-type,
+.earthStage svg > g:nth-of-type(6) text:first-of-type,
+.earthStage svg > g:nth-of-type(7) text:first-of-type,
+.earthStage svg > g:nth-of-type(8) text:first-of-type { animation:iconArrival 2.8s 2.35s infinite; }
+.earthStage svg > g:nth-of-type(6) text:first-of-type { animation-delay:3.05s; }
+.earthStage svg > g:nth-of-type(7) text:first-of-type { animation-delay:3.75s; }
+.earthStage svg > g:nth-of-type(8) text:first-of-type { animation-delay:4.45s; }
+
+/* Keep the displayed metrics static; the old animation remains visually suppressed until removed in a cleanup pass. */
+.stat strong { font-size:0; }
+.stat strong small { display:none; }
+.statMain strong:after { content:'639.772 kWh'; font-size:43px; }
+.statTL strong:after { content:'202.580,6 kWp'; font-size:24px; }
+.statTR strong:after { content:'1.366.671 kWh'; font-size:24px; }
+.statBL strong:after { content:'319.852 kWh'; font-size:24px; }
+.statBR strong:after { content:'433,2 tấn'; font-size:24px; }
+
+@keyframes galaxyPlanetBreath{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.018)}}
+@keyframes terminatorSweep{to{transform:rotate(360deg)}}
+@keyframes galaxyGrid{to{transform:rotate(382deg) scaleX(.34)}}
+@keyframes galaxyGridReverse{to{transform:rotate(-392deg) scaleX(.58)}}
+@keyframes orbitGalaxy{to{transform:translate(-50%,-50%) rotate(342deg)}}
+@keyframes nodeArrival{0%,68%,100%{stroke:rgba(139,246,255,.42);filter:none;fill:rgba(5,9,27,.96)}72%,82%{stroke:#8df6ff;filter:drop-shadow(0 0 9px #8df6ff);fill:rgba(47,33,95,.95)}88%{stroke:rgba(180,100,255,.55);filter:drop-shadow(0 0 5px #b464ff)}}
+@keyframes iconArrival{0%,68%,100%{fill:#dbe7ff;filter:none}72%,84%{fill:#ffffff;filter:drop-shadow(0 0 7px #8df6ff)}90%{fill:#c9a5ff;filter:drop-shadow(0 0 5px #b464ff)}}
+
+@media(max-width:640px){
+  .earthStage{width:330px;height:330px}
+  .earth{width:195px;height:195px}
+  .earthGlow{width:275px;height:275px}
+  .orbit{width:315px}
+  .orbitTwo{width:285px;height:285px}
+  .stat{width:132px}
+  .statMain{width:178px}
+  .statMain strong:after{font-size:30px}
+  .statTL strong:after,.statTR strong:after,.statBL strong:after,.statBR strong:after{font-size:16px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .earth,.earth:before,.gridA,.gridB,.orbit,.orbitTwo,
+  .earthStage svg > g:nth-of-type(5) circle:first-child,
+  .earthStage svg > g:nth-of-type(6) circle:first-child,
+  .earthStage svg > g:nth-of-type(7) circle:first-child,
+  .earthStage svg > g:nth-of-type(8) circle:first-child,
+  .earthStage svg > g:nth-of-type(5) text:first-of-type,
+  .earthStage svg > g:nth-of-type(6) text:first-of-type,
+  .earthStage svg > g:nth-of-type(7) text:first-of-type,
+  .earthStage svg > g:nth-of-type(8) text:first-of-type{animation:none!important}
+}
