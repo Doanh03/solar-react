@@ -1,0 +1,116 @@
+/* Strong, unmistakable globe rotation layer.
+   Deliberately uses moving longitude/latitude bands + perspective squash,
+   while leaving the existing energy beams, particles, CTA and contact layer untouched. */
+
+.energy-core {
+  perspective: 520px;
+  transform-style: preserve-3d;
+}
+
+.globe-surface {
+  inset: -24%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 9px,
+      rgba(236,255,184,.72) 10px 12px,
+      rgba(110,205,91,.38) 13px 17px,
+      transparent 18px 31px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 13px,
+      rgba(206,255,150,.34) 14px 16px,
+      transparent 17px 29px
+    );
+  filter: drop-shadow(0 0 7px rgba(213,255,157,.5));
+  mix-blend-mode: screen;
+  backface-visibility: hidden;
+}
+
+.globe-surface-a {
+  animation: globe-real-rotation-a 2.9s linear infinite;
+}
+
+.globe-surface-b {
+  opacity: .82;
+  animation: globe-real-rotation-b 3.7s linear infinite;
+}
+
+.globe-latitude {
+  width: 145%;
+  left: -22.5%;
+  height: 32%;
+  border-top-width: 2px;
+  border-bottom-width: 1px;
+  box-shadow: 0 0 14px rgba(214,255,165,.22);
+  backface-visibility: hidden;
+}
+
+.latitude-a {
+  animation: latitude-real-rotation-a 2.9s ease-in-out infinite;
+}
+
+.latitude-b {
+  animation: latitude-real-rotation-b 3.7s ease-in-out infinite;
+}
+
+@keyframes globe-real-rotation-a {
+  0% {
+    transform: translateX(-36%) rotateY(-34deg) scaleX(.72) skewY(-7deg);
+    background-position: 0 0, 0 0;
+  }
+  25% {
+    transform: translateX(-14%) rotateY(-12deg) scaleX(.9) skewY(-5deg);
+    background-position: 42px 0, -18px 0;
+  }
+  50% {
+    transform: translateX(0) rotateY(0deg) scaleX(1) skewY(-2deg);
+    background-position: 84px 0, -36px 0;
+  }
+  75% {
+    transform: translateX(14%) rotateY(12deg) scaleX(.9) skewY(-5deg);
+    background-position: 126px 0, -54px 0;
+  }
+  100% {
+    transform: translateX(36%) rotateY(34deg) scaleX(.72) skewY(-7deg);
+    background-position: 168px 0, -72px 0;
+  }
+}
+
+@keyframes globe-real-rotation-b {
+  0% {
+    transform: translateX(36%) rotateY(34deg) scaleX(.72) skewY(7deg) scaleX(-1);
+    background-position: 168px 0, -72px 0;
+  }
+  50% {
+    transform: translateX(0) rotateY(0deg) scaleX(-1) skewY(0deg);
+    background-position: 84px 0, -36px 0;
+  }
+  100% {
+    transform: translateX(-36%) rotateY(-34deg) scaleX(.72) skewY(7deg) scaleX(-1);
+    background-position: 0 0, 0 0;
+  }
+}
+
+@keyframes latitude-real-rotation-a {
+  0%,100% { transform: translateX(-12%) rotate(-12deg) scaleX(.7); opacity: .32; }
+  50% { transform: translateX(12%) rotate(-12deg) scaleX(1.08); opacity: .95; }
+}
+
+@keyframes latitude-real-rotation-b {
+  0%,100% { transform: translateX(12%) rotate(12deg) scaleX(.7); opacity: .25; }
+  50% { transform: translateX(-12%) rotate(12deg) scaleX(1.08); opacity: .82; }
+}
+
+@media (max-width: 650px) {
+  .globe-surface { inset: -30%; }
+  .globe-latitude { width: 165%; left: -32.5%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-surface-a,
+  .globe-surface-b,
+  .latitude-a,
+  .latitude-b { animation: none; }
+}
