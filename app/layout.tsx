@@ -3,8 +3,10 @@ import './globals.css';
 import './business-motion.css';
 import './hero-electric.css';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://mtsolar.vn';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://solar-react-swart.vercel.app'),
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'MT Solar | Giải pháp điện mặt trời',
     template: '%s | MT Solar',
