@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
 import './App.css'
+import './hero-electric.css'
+import './hero-globe-rotation.css'
 
 const solutions = [
   { icon: '⌂', title: 'Điện mặt trời hộ gia đình', text: 'Tối ưu hệ thống theo mức tiêu thụ điện và diện tích mái của từng gia đình.' },
@@ -72,6 +74,39 @@ function App() {
 
           <div className="hero-visual" aria-label="Minh họa hệ thống điện mặt trời">
             <div className="sun-glow" />
+            <div className="energy-core" aria-hidden="true">
+              <span className="globe-surface globe-surface-a" />
+              <span className="globe-surface globe-surface-b" />
+              <span className="globe-latitude latitude-a" />
+              <span className="globe-latitude latitude-b" />
+              <span className="core-orbit core-orbit-a" />
+              <span className="core-orbit core-orbit-b" />
+              <span className="core-ring" />
+              <span className="core-spark spark-a" />
+              <span className="core-spark spark-b" />
+              <span className="core-spark spark-c" />
+              <span className="core-bolt">ϟ</span>
+            </div>
+            <svg className="electric-flow" viewBox="0 0 520 520" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <filter id="electric-glow" x="-60%" y="-60%" width="220%" height="220%">
+                  <feGaussianBlur stdDeviation="5" result="blur" />
+                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+              </defs>
+              <path className="flow-track" d="M260 257 C214 226 164 194 112 156" />
+              <path className="flow-track" d="M260 257 C307 221 361 190 420 148" />
+              <path className="flow-track" d="M260 263 C205 293 151 327 94 370" />
+              <path className="flow-track" d="M260 263 C317 295 371 330 427 372" />
+              <path className="flow-bolt" d="M260 257 C214 226 164 194 112 156" />
+              <path className="flow-bolt flow-delay-1" d="M260 257 C307 221 361 190 420 148" />
+              <path className="flow-bolt flow-delay-2" d="M260 263 C205 293 151 327 94 370" />
+              <path className="flow-bolt flow-delay-3" d="M260 263 C317 295 371 330 427 372" />
+            </svg>
+            <div className="energy-node node-a"><span>☀</span><small>Solar</small></div>
+            <div className="energy-node node-b"><span>⌂</span><small>Home</small></div>
+            <div className="energy-node node-c"><span>▦</span><small>Business</small></div>
+            <div className="energy-node node-d"><span>◈</span><small>Storage</small></div>
             <div className="energy-card top-card"><span>☀</span><div><small>Sản lượng hôm nay</small><strong>28.6 kWh</strong></div><b>+18%</b></div>
             <div className="roof">
               <div className="panel-grid">{Array.from({ length: 24 }, (_, i) => <span key={i} />)}</div>
@@ -118,7 +153,7 @@ function App() {
 
       <footer className="footer"><div className="brand"><span className="brand-mark">☼</span><span><strong>SOLAR</strong><small>NOVA ENERGY</small></span></div><div><span>© 2026 Solar Nova Energy</span><span>Thiết kế độc lập · Không liên kết với MT Solar</span></div></footer>
 
-      {leadOpen && <div className="modal-backdrop" onMouseDown={(e) => e.target === e.currentTarget && setLeadOpen(false)}><div className="lead-modal"><button className="modal-close" onClick={() => setLeadOpen(false)}>×</button><span className="kicker">NHẬN TƯ VẤN</span><h2>Để lại thông tin,<br /><em>chúng tôi sẽ liên hệ.</em></h2><form onSubmit={(e) => { e.preventDefault(); setLeadOpen(false); alert('Đã nhận yêu cầu. Đây là bản demo, bước tiếp theo sẽ kết nối API/CRM.') }}><input required placeholder="Họ và tên" /><input required placeholder="Số điện thoại" type="tel" /><select defaultValue=""><option value="" disabled>Nhu cầu của bạn</option><option>Hộ gia đình</option><option>Doanh nghiệp</option><option>Hybrid / Pin lưu trữ</option></select><button className="button button-primary full" type="submit">Gửi yêu cầu →</button></form></div></div>}
+      {leadOpen && <div className="modal-backdrop" onMouseDown={(e) => e.target === e.currentTarget && setLeadOpen(false)}><div className="lead-modal"><button className="modal-close" onClick={() => setLeadOpen(false)}>×</button><span className="kicker">NHẬN TƯ VẤN</span><h2>Để lại thông tin,<br /><em>chúng tôi sẽ liên hệ.</em></h2><form onSubmit={(e) => { e.preventDefault(); setLeadOpen(false); alert('Đã nhận yêu cầu. Đây là bản demo, bước tiếp theo sẽ kết nối API/CRM.') }}><input required placeholder="Họ và tên" /><input required placeholder="Số điện thoại" type="tel" /><select defaultValue=""><option value="" disabled>Nhu cầu của bạn</option><option>Hộ gia đình</option><option>Doanh nghiệp</option><option>Hybrid / Pin lưu trữ</option></select><button className="button button-primary full" type="submit">Gửi yêu cầu tư vấn →</button></form></div></div>}
     </div>
   )
 }

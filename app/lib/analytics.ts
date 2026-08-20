@@ -6,13 +6,20 @@ export type AnalyticsEventName =
   | 'lead_form_step_completed'
   | 'lead_phone_reached'
   | 'lead_submitted'
+  | 'lead_success'
+  | 'lead_submit_error'
+  | 'lead_form_abandoned'
   | 'mobile_sticky_cta_impression'
-  | 'mobile_sticky_cta_click';
+  | 'mobile_sticky_cta_click'
+  | 'contact_zalo_clicked'
+  | 'contact_messenger_clicked'
+  | 'contact_call_clicked';
 
 type AnalyticsPayload = Record<string, string | number | boolean | null | undefined>;
 
 type DataLayerWindow = Window & {
   dataLayer?: Array<Record<string, unknown>>;
+  fbq?: (...args: unknown[]) => void;
 };
 
 const FIRST_TOUCH_KEY = 'solar_first_touch_v1';
@@ -50,15 +57,12 @@ function getMarketingContext(): Record<string, string> {
   }
 }
 
-export function trackEvent(
-  eventName: AnalyticsEventName,
-  payload: AnalyticsPayload = {},
-): void {
+export function trackEvent(eventName: AnalyticsEventName, payload: AnalyticsPayload = {}): void {
   if (typeof window === 'undefined') return;
 
   const event = {
     event: eventName,
-    event_version: 'v1',
+    event_version: 'v2',
     page: window.location.pathname,
     device: getDevice(),
     ...getMarketingContext(),
@@ -69,6 +73,14 @@ export function trackEvent(
   const analyticsWindow = window as DataLayerWindow;
   analyticsWindow.dataLayer ??= [];
   analyticsWindow.dataLayer.push(event);
+
+  // Mirror the real lead-success conversion to Meta only after /api/leads succeeds.
+  if (analyticsWindow.fbq && (eventName === 'lead_success' || eventName === 'calculator_completed')) {
+    analyticsWindow.fbq('track', eventName === 'lead_success' ? 'Lead' : 'CompleteRegistration', {
+      content_name: 'solar-business-site',
+      page: window.location.pathname,
+    });
+  }
 
   if (process.env.NODE_ENV !== 'production') {
     console.debug('[analytics]', event);

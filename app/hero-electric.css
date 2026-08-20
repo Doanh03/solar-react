@@ -1,0 +1,66 @@
+/* Hero electrical atmosphere + motion layer. Imported after the existing motion styles. */
+@keyframes solarCurrentFlow{from{stroke-dashoffset:0}to{stroke-dashoffset:-34}}
+@keyframes solarCurrentFlash{0%,72%,100%{opacity:.2;stroke-width:1}75%{opacity:1;stroke-width:2.4}78%{opacity:.34;stroke-width:1.1}81%{opacity:.92;stroke-width:2}84%{opacity:.2;stroke-width:1}}
+@keyframes solarCoreFlash{0%,68%,100%{opacity:.12}72%{opacity:.42}75%{opacity:.1}78%{opacity:.38}82%{opacity:.12}}
+@keyframes solarRingSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes solarRingReverse{to{transform:translate(-50%,-50%) rotate(-360deg)}}
+@keyframes solarCardSweep{to{transform:rotate(360deg)}}
+
+svg[viewBox="0 0 390 390"] path{stroke:#74e8ff!important;stroke-dasharray:3 7 1 10;stroke-dashoffset:0;filter:drop-shadow(0 0 3px rgba(116,232,255,.65)) drop-shadow(0 0 8px rgba(255,157,34,.3));animation:solarCurrentFlow 2.8s linear infinite,solarCurrentFlash 4.6s ease-in-out infinite}
+svg[viewBox="0 0 390 390"] path:nth-of-type(2){animation-delay:-.7s,.9s}svg[viewBox="0 0 390 390"] path:nth-of-type(3){animation-delay:-1.3s,1.7s}svg[viewBox="0 0 390 390"] path:nth-of-type(4){animation-delay:-1.9s,2.5s}
+svg[viewBox="0 0 390 390"] circle[fill="url(#energyCore)"]{animation:solarCoreFlash 3.8s ease-in-out infinite;filter:drop-shadow(0 0 7px rgba(255,186,74,.75))}
+
+/* Premium energy halo around the real Earth stage. */
+[class*="earthStage"]{filter:drop-shadow(0 0 20px rgba(92,221,255,.08));isolation:isolate}
+[class*="earthStage"]:before{content:"";position:absolute;left:50%;top:50%;width:330px;height:330px;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(115,232,255,.2);border-top-color:rgba(255,187,84,.95);border-right-color:transparent;box-shadow:0 0 24px rgba(115,232,255,.1),inset 0 0 24px rgba(255,157,34,.035);pointer-events:none;z-index:4;animation:solarRingSpin 5.5s linear infinite}
+[class*="earthStage"]:after{content:"";position:absolute;left:50%;top:50%;width:292px;height:292px;transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(255,187,84,.18);border-left-color:rgba(115,232,255,.58);border-bottom-color:transparent;pointer-events:none;z-index:4;animation:solarRingReverse 7.5s linear infinite}
+
+/* Subtle scanning field inside the command card. */
+[class*="commandCard"]:before{content:"";position:absolute;inset:-30%;background:conic-gradient(from 20deg,transparent 0 18%,rgba(115,232,255,.07) 20%,transparent 25% 48%,rgba(255,157,34,.055) 50%,transparent 56% 100%);animation:solarCardSweep 15s linear infinite;pointer-events:none}
+[class*="commandCard"]:after{content:"";position:absolute;left:8%;right:8%;top:16%;height:68%;background:radial-gradient(circle at 50% 50%,rgba(255,157,34,.12),transparent 30%),radial-gradient(circle at 50% 50%,rgba(115,232,255,.09),transparent 57%);filter:blur(20px);pointer-events:none}
+[class*="commandCard"] [class*="commandHeader"]{z-index:10}
+[class*="stat"]{border-color:rgba(115,232,255,.13)!important;background:rgba(5,11,20,.68)!important;box-shadow:0 18px 45px rgba(0,0,0,.28),0 0 24px rgba(115,232,255,.035)!important}
+[class*="statMain"]{border-color:rgba(255,179,71,.25)!important;box-shadow:0 18px 50px rgba(0,0,0,.3),0 0 30px rgba(255,157,34,.07)!important}
+[class*="energyDot"]{width:5px!important;height:5px!important;background:#c3f7ff!important;box-shadow:0 0 10px 2px rgba(115,232,255,.9),0 0 24px rgba(255,157,34,.45)!important}
+
+/* Galaxy redesign: one calm readout, more negative space, no stat cards covering the nodes. */
+@keyframes galaxyEnergyReadout{0%,31%{content:"631"}32%,64%{content:"632"}65%,100%{content:"633"}}
+@keyframes galaxyNodeFlash{0%,72%,100%{opacity:.78;filter:drop-shadow(0 0 3px rgba(126,231,255,.45))}76%{opacity:1;filter:drop-shadow(0 0 7px rgba(255,107,214,.95)) drop-shadow(0 0 15px rgba(126,231,255,.95))}82%{opacity:.92;filter:drop-shadow(0 0 4px rgba(157,124,255,.75))}86%{opacity:.78}}
+@keyframes galaxyNodeRing{0%,72%,100%{stroke:rgba(126,231,255,.28)}76%{stroke:rgba(255,107,214,.95)}82%{stroke:rgba(157,124,255,.7)}86%{stroke:rgba(126,231,255,.28)}}
+
+[class*="commandCard"]{background:radial-gradient(circle at 50% 48%,rgba(69,44,132,.22),transparent 32%),radial-gradient(circle at 75% 18%,rgba(255,107,214,.08),transparent 28%),linear-gradient(145deg,#080b1d 0%,#050716 52%,#03040d 100%)!important;border-color:rgba(157,124,255,.22)!important}
+[class*="commandCard"]:after{background:radial-gradient(circle at 50% 50%,rgba(126,231,255,.10),transparent 30%),radial-gradient(circle at 52% 50%,rgba(157,124,255,.13),transparent 54%),radial-gradient(circle at 70% 28%,rgba(255,107,214,.06),transparent 30%)!important}
+[class*="earthGlow"]{background:radial-gradient(circle,rgba(126,231,255,.15),rgba(157,124,255,.09) 38%,transparent 68%)!important;filter:blur(11px)!important}
+[class*="earth"]:not([class*="earthStage"]){background:radial-gradient(circle at 32% 28%,#4a5fa0 0,#18275a 43%,#07091b 78%)!important;box-shadow:inset -28px -24px 55px rgba(0,0,0,.78),0 0 55px rgba(126,231,255,.12),0 0 90px rgba(157,124,255,.10),0 0 0 1px rgba(126,231,255,.24)!important}
+[class*="earthLand"]{background:radial-gradient(ellipse at 30% 35%,rgba(89,221,255,.55) 0 7%,transparent 8%),radial-gradient(ellipse at 62% 28%,rgba(157,124,255,.55) 0 9%,transparent 10%),radial-gradient(ellipse at 52% 60%,rgba(91,232,205,.52) 0 12%,transparent 13%),radial-gradient(ellipse at 25% 68%,rgba(255,107,214,.28) 0 8%,transparent 9%)!important;opacity:.78!important}
+[class*="earthGrid"]{border-color:rgba(126,231,255,.2)!important}
+[class*="orbitOne"]{border-color:rgba(126,231,255,.35)!important;border-top-color:rgba(255,107,214,.9)!important;box-shadow:0 0 20px rgba(126,231,255,.08)!important}
+[class*="orbitTwo"]{border-color:rgba(157,124,255,.28)!important;border-left-color:rgba(126,231,255,.7)!important}
+svg[viewBox="0 0 390 390"] path{stroke:#9cecff!important;filter:drop-shadow(0 0 4px rgba(126,231,255,.72)) drop-shadow(0 0 11px rgba(157,124,255,.42))!important}
+svg[viewBox="0 0 390 390"] circle[fill="url(#energyCore)"]{filter:drop-shadow(0 0 8px rgba(126,231,255,.75)) drop-shadow(0 0 18px rgba(255,107,214,.25))!important}
+
+/* Static surrounding HUD: only one intentionally slow energy pulse remains. */
+[class*="statTL"],[class*="statTR"],[class*="statBL"],[class*="statBR"]{display:none!important}
+[class*="statMain"]{left:50%!important;top:86px!important;bottom:auto!important;width:168px!important;padding:10px 14px!important;border-radius:999px!important;text-align:center!important;border-color:rgba(126,231,255,.24)!important;background:rgba(4,8,22,.72)!important;backdrop-filter:blur(14px)!important;box-shadow:0 0 28px rgba(126,231,255,.09),inset 0 0 18px rgba(157,124,255,.06)!important;transform:translateX(-50%)!important;z-index:12!important}
+[class*="statMain"] span{color:#8ea7c8!important;font-size:7px!important;letter-spacing:.16em!important}
+[class*="statMain"] strong{font-size:0!important;margin-top:4px!important;color:#fff!important}
+[class*="statMain"] strong:before{content:"631";display:inline-block;font-size:28px;line-height:1;color:#eafcff;letter-spacing:-.05em;text-shadow:0 0 12px rgba(126,231,255,.8),0 0 24px rgba(157,124,255,.45);animation:galaxyEnergyReadout 15s steps(1,end) infinite}
+[class*="statMain"] strong small{display:inline!important;font-size:9px!important;color:#8defff!important;margin-left:4px!important}
+[class*="statMain"] b{color:#ff9fe5!important;font-size:6px!important;letter-spacing:.18em!important;margin-top:5px!important}
+
+/* Each node flashes when the energy pulse reaches it. */
+svg[viewBox="0 0 390 390"] g:nth-of-type(1)>circle:first-child{animation:galaxyNodeFlash 4s ease-in-out infinite;animation-delay:2.35s}
+svg[viewBox="0 0 390 390"] g:nth-of-type(2)>circle:first-child{animation:galaxyNodeFlash 4s ease-in-out infinite;animation-delay:3.05s}
+svg[viewBox="0 0 390 390"] g:nth-of-type(3)>circle:first-child{animation:galaxyNodeFlash 4s ease-in-out infinite;animation-delay:3.65s}
+svg[viewBox="0 0 390 390"] g:nth-of-type(4)>circle:first-child{animation:galaxyNodeFlash 4s ease-in-out infinite;animation-delay:4.25s}
+svg[viewBox="0 0 390 390"] g:nth-of-type(1)>circle:nth-child(2){animation:galaxyNodeRing 4s ease-in-out infinite;animation-delay:2.35s}
+svg[viewBox="0 0 390 390"] g:nth-of-type(2)>circle:nth-child(2){animation:galaxyNodeRing 4s ease-in-out infinite;animation-delay:3.05s}
+svg[viewBox="0 0 390 390"] g:nth-of-type(3)>circle:nth-child(2){animation:galaxyNodeRing 4s ease-in-out infinite;animation-delay:3.65s}
+svg[viewBox="0 0 390 390"] g:nth-of-type(4)>circle:nth-child(2){animation:galaxyNodeRing 4s ease-in-out infinite;animation-delay:4.25s}
+svg[viewBox="0 0 390 390"] g:nth-of-type(1)>text:first-of-type,svg[viewBox="0 0 390 390"] g:nth-of-type(2)>text:first-of-type,svg[viewBox="0 0 390 390"] g:nth-of-type(3)>text:first-of-type,svg[viewBox="0 0 390 390"] g:nth-of-type(4)>text:first-of-type{fill:#f5fbff!important}
+svg[viewBox="0 0 390 390"] g:nth-of-type(1)>text:nth-of-type(2),svg[viewBox="0 0 390 390"] g:nth-of-type(2)>text:nth-of-type(2),svg[viewBox="0 0 390 390"] g:nth-of-type(3)>text:nth-of-type(2),svg[viewBox="0 0 390 390"] g:nth-of-type(4)>text:nth-of-type(2){fill:#9bb4d4!important}
+
+[class*="energyDot"]{background:#9cecff!important;box-shadow:0 0 9px 2px rgba(126,231,255,.9),0 0 24px rgba(255,107,214,.35)!important}
+
+@media(max-width:640px){svg[viewBox="0 0 390 390"] path{filter:drop-shadow(0 0 2px rgba(116,232,255,.55))}[class*="earthStage"]:before{width:255px;height:255px}[class*="earthStage"]:after{width:225px;height:225px}[class*="statMain"]{top:68px!important;width:150px!important}[class*="statMain"] strong:before{font-size:24px}}
+@media(prefers-reduced-motion:reduce){svg[viewBox="0 0 390 390"] path,svg[viewBox="0 0 390 390"] circle[fill="url(#energyCore)"],[class*="earthStage"]:before,[class*="earthStage"]:after,[class*="commandCard"]:before,[class*="statMain"] strong:before,[class*="earthStage"] svg g circle{animation:none!important}}

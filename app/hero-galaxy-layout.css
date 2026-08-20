@@ -1,0 +1,26 @@
+/* Galaxy hero geometry: keep nodes clear of the static metric cards. */
+.earthStage { width:390px; height:390px; }
+.earthGlow { width:330px; height:330px; }
+.earth { width:250px; height:250px; }
+.orbit { width:360px; height:125px; }
+.orbitTwo { width:340px; height:340px; }
+.stat { width:125px; }
+.statTL { left:6px; top:31%; }
+.statTR { right:6px; top:31%; }
+.statBL { left:20px; bottom:72px; }
+.statBR { right:20px; bottom:72px; }
+.statMain { width:220px; top:18%; }
+
+@media(max-width:640px){
+  .earthStage { width:300px; height:300px; }
+  .earthGlow { width:250px; height:250px; }
+  .earth { width:180px; height:180px; }
+  .orbit { width:285px; height:105px; }
+  .orbitTwo { width:260px; height:260px; }
+  .stat { width:116px; }
+  .statTL { left:4px; top:34%; }
+  .statTR { right:4px; top:34%; }
+  .statBL { left:10px; bottom:68px; }
+  .statBR { right:10px; bottom:68px; }
+  .statMain { width:172px; top:17%; }
+}
