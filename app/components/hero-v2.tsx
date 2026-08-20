@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { trackEvent } from "@/app/lib/analytics";
 import styles from "./hero-v2.module.css";
 
 type Metric = { label: string; value: number; unit: string; step: number };
@@ -51,13 +52,7 @@ export default function HeroV2() {
       setActiveNode(null);
       setTargetNode(node);
       setPulse((value) => value + 1);
-
-      // First particle arrives at 2s; the icon glows exactly then.
-      glowTimer = window.setTimeout(() => {
-        setActiveNode(node);
-      }, 2000);
-
-      // Third particle arrives at 2.7s; keep a short pause before the next node.
+      glowTimer = window.setTimeout(() => setActiveNode(node), 2000);
       nextTimer = window.setTimeout(() => {
         nodeIndex = (nodeIndex + 1) % nodes.length;
         run();
@@ -124,8 +119,8 @@ export default function HeroV2() {
       </div>
 
       <div className={styles.actions}>
-        <a href="#contact">NHẬN TƯ VẤN</a>
-        <a href="#calculator">TÍNH TOÁN TIẾT KIỆM</a>
+        <a href="#lead-form" onClick={() => trackEvent("hero_cta_clicked", { section: "hero", cta_id: "hero-consultation", destination: "lead-form" })}>NHẬN TƯ VẤN MIỄN PHÍ</a>
+        <a href="#calculator" onClick={() => trackEvent("calculator_started", { section: "hero", cta_id: "hero-calculator" })}>TÍNH TOÁN TIẾT KIỆM</a>
       </div>
     </section>
   );
