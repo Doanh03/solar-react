@@ -1,0 +1,50 @@
+/* Hero-only electrical pulse layer. Imported after the existing motion styles. */
+@keyframes solarCurrentFlow {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -34; }
+}
+
+@keyframes solarCurrentFlash {
+  0%, 72%, 100% { opacity: .24; stroke-width: 1; }
+  75% { opacity: .95; stroke-width: 2.2; }
+  78% { opacity: .38; stroke-width: 1.2; }
+  81% { opacity: .9; stroke-width: 1.9; }
+  84% { opacity: .24; stroke-width: 1; }
+}
+
+@keyframes solarCoreFlash {
+  0%, 68%, 100% { opacity: .16; }
+  72% { opacity: .38; }
+  75% { opacity: .12; }
+  78% { opacity: .34; }
+  82% { opacity: .16; }
+}
+
+/* The four existing Earth-to-node paths become the visible electrical conduits. */
+svg[viewBox="0 0 390 390"] path {
+  stroke-dasharray: 3 7 1 10;
+  stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 3px rgba(255,157,34,.45));
+  animation: solarCurrentFlow 2.8s linear infinite, solarCurrentFlash 4.6s ease-in-out infinite;
+}
+
+svg[viewBox="0 0 390 390"] path:nth-of-type(2) { animation-delay: -.7s, .9s; }
+svg[viewBox="0 0 390 390"] path:nth-of-type(3) { animation-delay: -1.3s, 1.7s; }
+svg[viewBox="0 0 390 390"] path:nth-of-type(4) { animation-delay: -1.9s, 2.5s; }
+
+svg[viewBox="0 0 390 390"] circle[fill="url(#energyCore)"] {
+  animation: solarCoreFlash 3.8s ease-in-out infinite;
+}
+
+@media (max-width: 640px) {
+  svg[viewBox="0 0 390 390"] path {
+    filter: drop-shadow(0 0 2px rgba(255,157,34,.4));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  svg[viewBox="0 0 390 390"] path,
+  svg[viewBox="0 0 390 390"] circle[fill="url(#energyCore)"] {
+    animation: none;
+  }
+}
