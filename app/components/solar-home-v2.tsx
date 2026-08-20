@@ -63,15 +63,15 @@ function EnergyIcon({ x, y, label, type }: { x: number; y: number; label: string
           </>
         )}
       </g>
-      <circle r="22" fill="none" stroke="url(#iconGradient)" strokeWidth="5" opacity="0" filter="url(#nodeGlow)">
-        <animate attributeName="opacity" values="0;0;0.9;0.22;0" keyTimes="0;.91;.96;.985;1" dur="3s" repeatCount="indefinite" begin="0s" />
-      </circle>
       <text x="0" y="45" textAnchor="middle" fontSize="7" letterSpacing="1.2" fill="#a6b3c7" fontWeight="800">{label}</text>
     </g>
   );
 }
 
 function EnergyStream({ path, delay }: { path: string; delay: string }) {
+  const endX = path.includes('50 82') ? 50 : path.includes('340 91') ? 340 : path.includes('72 305') ? 72 : 330;
+  const endY = path.includes('50 82') ? 82 : path.includes('340 91') ? 91 : path.includes('72 305') ? 305 : 296;
+
   return (
     <>
       <path d={path} fill="none" stroke="rgba(108,215,255,.18)" strokeWidth="1.1" strokeDasharray="4 9" />
@@ -86,7 +86,7 @@ function EnergyStream({ path, delay }: { path: string; delay: string }) {
         <animateMotion dur="3s" begin={delay} repeatCount="indefinite" path={path} />
         <animate attributeName="opacity" values="0;.05;.22;.04;0" keyTimes="0;.3;.75;.94;1" dur="3s" begin={delay} repeatCount="indefinite" />
       </circle>
-      <circle cx={path.includes('50 82') ? 50 : path.includes('340 91') ? 340 : path.includes('72 305') ? 72 : 330} cy={path.includes('50 82') ? 82 : path.includes('340 91') ? 91 : path.includes('72 305') ? 305 : 296} r="22" fill="none" stroke="url(#iconGradient)" strokeWidth="4" opacity="0" filter="url(#nodeGlow)">
+      <circle cx={endX} cy={endY} r="22" fill="none" stroke="url(#iconGradient)" strokeWidth="4" opacity="0" filter="url(#nodeGlow)">
         <animate attributeName="opacity" values="0;0;0.9;0.25;0" keyTimes="0;.91;.96;.985;1" dur="3s" begin={delay} repeatCount="indefinite" />
       </circle>
     </>
