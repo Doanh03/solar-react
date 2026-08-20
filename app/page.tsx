@@ -1,5 +1,5 @@
-import { SolarBusinessHome } from '@/app/components/business-site';
+import SolarHomeComplete from '@/app/components/solar-home-complete';
 
 export default function HomePage() {
-  return <SolarBusinessHome />;
+  return <SolarHomeComplete />;
 }
