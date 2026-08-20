@@ -12,9 +12,15 @@ const metrics = [
 ] as const;
 
 const nodes = ["HOME", "FACTORY", "BATTERY", "GRID"] as const;
+const START_OUTPUT = 639_772;
+
+function formatKwh(value: number) {
+  return new Intl.NumberFormat("vi-VN").format(value);
+}
 
 export default function HeroV2() {
   const [activeNode, setActiveNode] = useState<(typeof nodes)[number] | null>(null);
+  const [output, setOutput] = useState(START_OUTPUT);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -33,6 +39,11 @@ export default function HeroV2() {
     return () => {
       if (timer.current) clearTimeout(timer.current);
     };
+  }, []);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => setOutput((value) => value + 1), 500);
+    return () => window.clearInterval(interval);
   }, []);
 
   return (
@@ -72,7 +83,7 @@ export default function HeroV2() {
         ))}
 
         <div className={styles.heroMetric}>
-          <strong>639.772</strong><span>kWh</span>
+          <strong>{formatKwh(output)}</strong><span>kWh</span>
           <small>SẢN LƯỢNG ĐIỆN MẶT TRỜI HÔM NAY</small>
         </div>
       </div>
