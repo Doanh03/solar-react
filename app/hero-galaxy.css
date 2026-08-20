@@ -1,87 +1,67 @@
-/* Galaxy energy planet override */
-.commandCard { background: radial-gradient(circle at 50% 52%, rgba(34,26,91,.55), rgba(5,7,24,.98) 58%), linear-gradient(145deg,#090d25,#040612); }
-.commandCard:before { background: radial-gradient(circle at 50% 48%, rgba(75,226,255,.09), transparent 30%), radial-gradient(circle at 50% 52%, rgba(142,65,255,.13), transparent 58%); }
-.earthStage { width: 500px; height: 500px; }
-.earthGlow { width: 410px; height: 410px; background: radial-gradient(circle,rgba(61,218,255,.14),rgba(125,55,255,.08) 38%,transparent 68%); filter: blur(18px); }
-.earth { width: 286px; height: 286px; background: radial-gradient(circle at 32% 27%,#b9ffff 0%,#62e8ff 5%,#3260ff 20%,#251a71 48%,#09051c 73%,#02030d 100%); box-shadow: inset -42px -34px 70px rgba(0,0,0,.78), inset 18px 10px 35px rgba(164,240,255,.22), 0 0 0 1px rgba(137,240,255,.38), 0 0 45px rgba(73,214,255,.22), 0 0 105px rgba(127,65,255,.16); overflow:hidden; animation: galaxyPlanetBreath 5.8s ease-in-out infinite; }
-.earth:before { content:""; position:absolute; inset:-3px; border-radius:50%; background: conic-gradient(from 215deg,transparent 0 38%,rgba(97,238,255,.95) 42%,rgba(199,105,255,.6) 47%,transparent 52% 100%); mix-blend-mode:screen; opacity:.72; animation: terminatorSweep 9s linear infinite; }
-.earth:after { content:""; position:absolute; inset:0; border-radius:50%; background: radial-gradient(ellipse at 66% 35%,rgba(2,3,14,0) 0 32%,rgba(2,3,14,.32) 48%,rgba(1,2,9,.88) 76%), linear-gradient(115deg,transparent 0 46%,rgba(2,3,14,.78) 73%); }
-.earthLand { display:none; }
-.earthGrid { border-color:rgba(132,232,255,.18); }
-.gridA { transform:rotate(22deg) scaleX(.34); animation:galaxyGrid 14s linear infinite; }
-.gridB { transform:rotate(-32deg) scaleX(.58); animation:galaxyGridReverse 19s linear infinite; border-color:rgba(180,111,255,.18); }
-.orbit { width:470px; height:155px; border-color:rgba(78,226,255,.34); box-shadow:0 0 20px rgba(74,220,255,.12); animation:orbitGalaxy 12s linear infinite; }
-.orbitTwo { width:420px; height:420px; border-color:rgba(156,82,255,.18); animation-duration:21s; }
-.energyDot { background:#8df6ff; box-shadow:0 0 12px #8df6ff,0 0 28px rgba(146,73,255,.8); }
-.stat { background:rgba(7,10,26,.72); border-color:rgba(112,227,255,.14); }
-.stat strong small { color:#8df6ff; }
-.statMain { border-color:rgba(156,82,255,.28); background:rgba(9,11,29,.82); }
-.statMain strong { color:#eefaff; }
-.stat b { color:#b8a0ff; }
-.commandFooter a { color:#8df6ff; }
+/* Galaxy energy-planet hero — inspired by premium solar dashboard language, not a copy */
+.commandCard{background:radial-gradient(circle at 50% 50%,rgba(36,29,105,.58),rgba(5,7,24,.985) 57%),linear-gradient(145deg,#090d25,#03050f);}
+.commandCard:before{background:radial-gradient(circle at 50% 48%,rgba(75,226,255,.10),transparent 28%),radial-gradient(circle at 50% 53%,rgba(160,78,255,.16),transparent 60%);}
+.commandCard:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,transparent 0 34%,rgba(90,72,180,.035) 54%,transparent 72%),linear-gradient(120deg,transparent 0 48%,rgba(255,255,255,.025) 50%,transparent 52%);mix-blend-mode:screen;}
+.earthStage{width:500px;height:500px;}
+.earthGlow{width:430px;height:430px;background:radial-gradient(circle,rgba(65,222,255,.16),rgba(124,62,255,.10) 36%,rgba(232,71,255,.035) 52%,transparent 70%);filter:blur(18px);}
+.earth{width:282px;height:282px;background:radial-gradient(circle at 31% 26%,#e7ffff 0%,#76efff 4%,#3578ff 17%,#34218f 44%,#12082e 68%,#02030c 100%);box-shadow:inset -48px -38px 72px rgba(0,0,0,.80),inset 20px 12px 36px rgba(174,246,255,.22),0 0 0 1px rgba(150,244,255,.45),0 0 42px rgba(65,221,255,.25),0 0 110px rgba(154,70,255,.20);overflow:hidden;animation:galaxyPlanetBreath 6.5s ease-in-out infinite;}
+.earth:before{content:"";position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(from 205deg,transparent 0 34%,rgba(96,238,255,.98) 40%,rgba(206,111,255,.80) 46%,rgba(255,94,215,.45) 50%,transparent 55% 100%);mix-blend-mode:screen;opacity:.78;animation:terminatorSweep 11s linear infinite;}
+.earth:after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at 66% 35%,transparent 0 31%,rgba(2,3,14,.30) 47%,rgba(1,2,9,.90) 77%),linear-gradient(115deg,transparent 0 45%,rgba(2,3,14,.80) 73%);}
+.earthLand{display:none;}
+.earthGrid{border-color:rgba(132,232,255,.18);}
+.gridA{transform:rotate(22deg) scaleX(.34);animation:galaxyGrid 14s linear infinite;}
+.gridB{transform:rotate(-32deg) scaleX(.58);animation:galaxyGridReverse 19s linear infinite;border-color:rgba(190,111,255,.18);}
+.orbit{width:470px;height:155px;border-color:rgba(78,226,255,.34);box-shadow:0 0 20px rgba(74,220,255,.12);animation:orbitGalaxy 12s linear infinite;}
+.orbitTwo{width:420px;height:420px;border-color:rgba(156,82,255,.20);animation-duration:21s;}
+.energyDot{background:#9af8ff;box-shadow:0 0 12px #9af8ff,0 0 28px rgba(150,72,255,.85);}
 
-/* Energy arrival: the four node groups are the fifth through eighth SVG groups. */
-.earthStage svg > g:nth-of-type(5) circle:first-child,
-.earthStage svg > g:nth-of-type(6) circle:first-child,
-.earthStage svg > g:nth-of-type(7) circle:first-child,
-.earthStage svg > g:nth-of-type(8) circle:first-child { fill:rgba(5,9,27,.96); stroke:rgba(139,246,255,.42); }
-.earthStage svg > g:nth-of-type(5) circle:nth-of-type(2),
-.earthStage svg > g:nth-of-type(6) circle:nth-of-type(2),
-.earthStage svg > g:nth-of-type(7) circle:nth-of-type(2),
-.earthStage svg > g:nth-of-type(8) circle:nth-of-type(2) { stroke:rgba(155,94,255,.28); }
-.earthStage svg > g:nth-of-type(5) circle:first-child { animation:nodeArrival 2.8s 2.35s infinite; }
-.earthStage svg > g:nth-of-type(6) circle:first-child { animation:nodeArrival 2.8s 3.05s infinite; }
-.earthStage svg > g:nth-of-type(7) circle:first-child { animation:nodeArrival 2.8s 3.75s infinite; }
-.earthStage svg > g:nth-of-type(8) circle:first-child { animation:nodeArrival 2.8s 4.45s infinite; }
-.earthStage svg > g:nth-of-type(5) text,
-.earthStage svg > g:nth-of-type(6) text,
-.earthStage svg > g:nth-of-type(7) text,
-.earthStage svg > g:nth-of-type(8) text { fill:#b8c7e5; }
-.earthStage svg > g:nth-of-type(5) text:first-of-type,
-.earthStage svg > g:nth-of-type(6) text:first-of-type,
-.earthStage svg > g:nth-of-type(7) text:first-of-type,
-.earthStage svg > g:nth-of-type(8) text:first-of-type { animation:iconArrival 2.8s 2.35s infinite; }
-.earthStage svg > g:nth-of-type(6) text:first-of-type { animation-delay:3.05s; }
-.earthStage svg > g:nth-of-type(7) text:first-of-type { animation-delay:3.75s; }
-.earthStage svg > g:nth-of-type(8) text:first-of-type { animation-delay:4.45s; }
+/* Reference-like information cards: clean icon badge + static metric, no visual clutter. */
+.stat{width:178px;padding:13px 15px 13px 58px;border-radius:18px;border:1px solid rgba(120,224,255,.13);background:rgba(7,10,26,.70);backdrop-filter:blur(16px);box-shadow:0 18px 48px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.035);}
+.stat:before{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:32px;height:32px;display:grid;place-items:center;border-radius:10px;border:1px solid rgba(118,229,255,.30);background:linear-gradient(145deg,rgba(58,209,255,.13),rgba(157,75,255,.16));box-shadow:0 0 18px rgba(82,221,255,.10);font-size:17px;font-weight:700;color:#e9fbff;}
+.statTL:before{content:"☼";}
+.statTR:before{content:"⌂";}
+.statBL:before{content:"▰";}
+.statBR:before{content:"ϟ";}
+.stat span{font-size:7.5px;color:#91a0b8;}
+.stat strong{font-size:0;margin-top:3px;}
+.stat strong small{display:none;}
+.statMain{left:50%;top:20%;width:224px;padding:12px 14px;text-align:center;border-color:rgba(160,89,255,.28);background:rgba(9,11,29,.80);}
+.statMain:before{content:"✦";left:50%;top:-14px;transform:translateX(-50%);width:30px;height:30px;border-radius:50%;font-size:13px;background:rgba(10,14,35,.92);border-color:rgba(151,240,255,.35);}
+.statMain strong:after{content:"639.772 kWh";font-size:39px;letter-spacing:-.06em;color:#f4fbff;}
+.statTL strong:after{content:"202.580,6 kWp";font-size:22px;color:#f4fbff;}
+.statTR strong:after{content:"1.366.671 kWh";font-size:22px;color:#f4fbff;}
+.statBL strong:after{content:"319.852 kWh";font-size:22px;color:#f4fbff;}
+.statBR strong:after{content:"433,2 tấn";font-size:22px;color:#f4fbff;}
+.stat b{color:#bba8ff;}
+.commandFooter a{color:#9af8ff;}
+.statTL{left:18px;top:36%;}
+.statTR{right:18px;top:36%;}
+.statBL{left:38px;bottom:96px;}
+.statBR{right:28px;bottom:96px;}
 
-/* Keep the displayed metrics static; the old animation remains visually suppressed until removed in a cleanup pass. */
-.stat strong { font-size:0; }
-.stat strong small { display:none; }
-.statMain strong:after { content:'639.772 kWh'; font-size:43px; }
-.statTL strong:after { content:'202.580,6 kWp'; font-size:24px; }
-.statTR strong:after { content:'1.366.671 kWh'; font-size:24px; }
-.statBL strong:after { content:'319.852 kWh'; font-size:24px; }
-.statBR strong:after { content:'433,2 tấn'; font-size:24px; }
+/* Node treatment: thin HUD rings, restrained labels, and one short arrival flash per energy cycle. */
+.earthStage svg>g:nth-of-type(5) circle:first-child,.earthStage svg>g:nth-of-type(6) circle:first-child,.earthStage svg>g:nth-of-type(7) circle:first-child,.earthStage svg>g:nth-of-type(8) circle:first-child{fill:rgba(5,9,27,.96);stroke:rgba(151,240,255,.48);stroke-width:1.5;filter:drop-shadow(0 0 8px rgba(71,220,255,.10));}
+.earthStage svg>g:nth-of-type(5) circle:nth-of-type(2),.earthStage svg>g:nth-of-type(6) circle:nth-of-type(2),.earthStage svg>g:nth-of-type(7) circle:nth-of-type(2),.earthStage svg>g:nth-of-type(8) circle:nth-of-type(2){stroke:rgba(184,102,255,.30);stroke-width:1;}
+.earthStage svg>g:nth-of-type(5) text,.earthStage svg>g:nth-of-type(6) text,.earthStage svg>g:nth-of-type(7) text,.earthStage svg>g:nth-of-type(8) text{font-family:"Segoe UI Symbol","Arial Unicode MS",sans-serif;fill:#c8d7ee;}
+.earthStage svg>g:nth-of-type(5) text:first-of-type,.earthStage svg>g:nth-of-type(6) text:first-of-type,.earthStage svg>g:nth-of-type(7) text:first-of-type,.earthStage svg>g:nth-of-type(8) text:first-of-type{font-size:18px;font-weight:700;}
+.earthStage svg>g:nth-of-type(5) text:last-of-type,.earthStage svg>g:nth-of-type(6) text:last-of-type,.earthStage svg>g:nth-of-type(7) text:last-of-type,.earthStage svg>g:nth-of-type(8) text:last-of-type{font-size:6.5px;letter-spacing:1.3px;fill:#8fa0b8;}
+.earthStage svg>g:nth-of-type(5) circle:first-child{animation:nodeArrival 2.8s 2.20s infinite;}
+.earthStage svg>g:nth-of-type(6) circle:first-child{animation:nodeArrival 2.8s 2.90s infinite;}
+.earthStage svg>g:nth-of-type(7) circle:first-child{animation:nodeArrival 2.8s 3.60s infinite;}
+.earthStage svg>g:nth-of-type(8) circle:first-child{animation:nodeArrival 2.8s 4.30s infinite;}
+.earthStage svg>g:nth-of-type(5) text:first-of-type{animation:iconArrival 2.8s 2.20s infinite;}
+.earthStage svg>g:nth-of-type(6) text:first-of-type{animation:iconArrival 2.8s 2.90s infinite;}
+.earthStage svg>g:nth-of-type(7) text:first-of-type{animation:iconArrival 2.8s 3.60s infinite;}
+.earthStage svg>g:nth-of-type(8) text:first-of-type{animation:iconArrival 2.8s 4.30s infinite;}
 
 @keyframes galaxyPlanetBreath{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.018)}}
 @keyframes terminatorSweep{to{transform:rotate(360deg)}}
 @keyframes galaxyGrid{to{transform:rotate(382deg) scaleX(.34)}}
 @keyframes galaxyGridReverse{to{transform:rotate(-392deg) scaleX(.58)}}
 @keyframes orbitGalaxy{to{transform:translate(-50%,-50%) rotate(342deg)}}
-@keyframes nodeArrival{0%,68%,100%{stroke:rgba(139,246,255,.42);filter:none;fill:rgba(5,9,27,.96)}72%,82%{stroke:#8df6ff;filter:drop-shadow(0 0 9px #8df6ff);fill:rgba(47,33,95,.95)}88%{stroke:rgba(180,100,255,.55);filter:drop-shadow(0 0 5px #b464ff)}}
-@keyframes iconArrival{0%,68%,100%{fill:#dbe7ff;filter:none}72%,84%{fill:#ffffff;filter:drop-shadow(0 0 7px #8df6ff)}90%{fill:#c9a5ff;filter:drop-shadow(0 0 5px #b464ff)}}
+@keyframes nodeArrival{0%,68%,100%{stroke:rgba(151,240,255,.48);filter:drop-shadow(0 0 8px rgba(71,220,255,.10));fill:rgba(5,9,27,.96)}72%,82%{stroke:#9af8ff;filter:drop-shadow(0 0 11px #9af8ff);fill:rgba(45,35,105,.98)}89%{stroke:rgba(190,102,255,.62);filter:drop-shadow(0 0 6px #be66ff)}}
+@keyframes iconArrival{0%,68%,100%{fill:#c8d7ee;filter:none}72%,84%{fill:#fff;filter:drop-shadow(0 0 8px #9af8ff)}90%{fill:#d5b7ff;filter:drop-shadow(0 0 5px #be66ff)}}
 
-@media(max-width:640px){
-  .earthStage{width:330px;height:330px}
-  .earth{width:195px;height:195px}
-  .earthGlow{width:275px;height:275px}
-  .orbit{width:315px}
-  .orbitTwo{width:285px;height:285px}
-  .stat{width:132px}
-  .statMain{width:178px}
-  .statMain strong:after{font-size:30px}
-  .statTL strong:after,.statTR strong:after,.statBL strong:after,.statBR strong:after{font-size:16px}
-}
-
-@media(prefers-reduced-motion:reduce){
-  .earth,.earth:before,.gridA,.gridB,.orbit,.orbitTwo,
-  .earthStage svg > g:nth-of-type(5) circle:first-child,
-  .earthStage svg > g:nth-of-type(6) circle:first-child,
-  .earthStage svg > g:nth-of-type(7) circle:first-child,
-  .earthStage svg > g:nth-of-type(8) circle:first-child,
-  .earthStage svg > g:nth-of-type(5) text:first-of-type,
-  .earthStage svg > g:nth-of-type(6) text:first-of-type,
-  .earthStage svg > g:nth-of-type(7) text:first-of-type,
-  .earthStage svg > g:nth-of-type(8) text:first-of-type{animation:none!important}
-}
+@media(max-width:980px){.statTL{left:12px}.statTR{right:12px}.statBL{left:28px}.statBR{right:18px}}
+@media(max-width:640px){.earthStage{width:330px;height:330px}.earth{width:195px;height:195px}.earthGlow{width:275px;height:275px}.orbit{width:315px}.orbitTwo{width:285px;height:285px}.stat{width:132px;padding:10px 10px 10px 44px}.stat:before{left:9px;width:27px;height:27px;font-size:14px}.statMain{width:178px;padding:11px 10px}.statMain:before{width:26px;height:26px;top:-12px}.statMain strong:after{font-size:29px}.statTL strong:after,.statTR strong:after,.statBL strong:after,.statBR strong:after{font-size:15px}.statTL{left:5px}.statTR{right:5px}.statBL{left:10px;bottom:86px}.statBR{right:8px;bottom:86px}}
+@media(prefers-reduced-motion:reduce){.earth,.earth:before,.gridA,.gridB,.orbit,.orbitTwo,.earthStage svg>g:nth-of-type(5) circle:first-child,.earthStage svg>g:nth-of-type(6) circle:first-child,.earthStage svg>g:nth-of-type(7) circle:first-child,.earthStage svg>g:nth-of-type(8) circle:first-child,.earthStage svg>g:nth-of-type(5) text:first-of-type,.earthStage svg>g:nth-of-type(6) text:first-of-type,.earthStage svg>g:nth-of-type(7) text:first-of-type,.earthStage svg>g:nth-of-type(8) text:first-of-type{animation:none!important}}
