@@ -1,16 +1,32 @@
-# React + Vite
+# Solar React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Solar Energy lead-generation website built with Next.js, React, TypeScript, and PostgreSQL.
 
-Currently, two official plugins are available:
+## Current production flow
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Next.js App Router frontend.
+- Multi-step solar consultation form on `/`.
+- `POST /api/leads` validates input, scores the lead, captures attribution, and persists it to PostgreSQL.
+- PostgreSQL connection uses the Vercel environment variable `DATABASE_URL`.
+- Successful lead persistence returns HTTP `201` with the created lead id, score, temperature, and timestamp.
+- Persistence failures return HTTP `503` and log `lead_persistence_failed` without exposing database credentials.
 
-## React Compiler
+## Development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+Build and lint:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm run lint
+npm run build
+```
+
+## Preview validation
+
+Use `docs/preview-checklist.md` to validate the full browser → API → PostgreSQL flow on a Vercel Preview deployment before promoting changes to Production.
+
+Do not print, commit, or share `DATABASE_URL`.
