@@ -12,6 +12,17 @@ const articles = [
 
 export default function KnowledgePage() {
   return <SimpleBusinessPage eyebrow="KIẾN THỨC" title="Hiểu đúng trước khi đầu tư điện mặt trời." intro="Kho nội dung giúp khách hàng tự tin hơn khi lựa chọn hệ thống, thiết bị và phương án lưu trữ.">
-    <section className="business-section"><div className="site-shell article-grid">{articles.map(([num, title, text]) => <Link className="article-card" href="/lien-he" key={title}><span>{num}</span><h2>{title}</h2><p>{text}</p><b>Đọc bài →</b></Link>)}</div></div></section>
+    <section className="business-section">
+      <div className="site-shell article-grid">
+        {articles.map(([num, title, text]) => (
+          <Link className="article-card" href="/lien-he" key={title}>
+            <span>{num}</span>
+            <h2>{title}</h2>
+            <p>{text}</p>
+            <b>Đọc bài →</b>
+          </Link>
+        ))}
+      </div>
+    </section>
   </SimpleBusinessPage>;
 }
