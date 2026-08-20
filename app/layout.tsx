@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import './business-motion.css';
 import './hero-electric.css';
+import './hero-galaxy.css';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://mtsolar.vn';
 
