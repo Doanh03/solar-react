@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import './App.css'
 import './hero-electric.css'
+import './hero-globe-rotation.css'
 
 const solutions = [
   { icon: '⌂', title: 'Điện mặt trời hộ gia đình', text: 'Tối ưu hệ thống theo mức tiêu thụ điện và diện tích mái của từng gia đình.' },
