@@ -74,6 +74,10 @@ function App() {
           <div className="hero-visual" aria-label="Minh họa hệ thống điện mặt trời">
             <div className="sun-glow" />
             <div className="energy-core" aria-hidden="true">
+              <span className="globe-surface globe-surface-a" />
+              <span className="globe-surface globe-surface-b" />
+              <span className="globe-latitude latitude-a" />
+              <span className="globe-latitude latitude-b" />
               <span className="core-orbit core-orbit-a" />
               <span className="core-orbit core-orbit-b" />
               <span className="core-ring" />
@@ -148,7 +152,7 @@ function App() {
 
       <footer className="footer"><div className="brand"><span className="brand-mark">☼</span><span><strong>SOLAR</strong><small>NOVA ENERGY</small></span></div><div><span>© 2026 Solar Nova Energy</span><span>Thiết kế độc lập · Không liên kết với MT Solar</span></div></footer>
 
-      {leadOpen && <div className="modal-backdrop" onMouseDown={(e) => e.target === e.currentTarget && setLeadOpen(false)}><div className="lead-modal"><button className="modal-close" onClick={() => setLeadOpen(false)}>×</button><span className="kicker">NHẬN TƯ VẤN</span><h2>Để lại thông tin,<br /><em>chúng tôi sẽ liên hệ.</em></h2><form onSubmit={(e) => { e.preventDefault(); setLeadOpen(false); alert('Đã nhận yêu cầu. Đây là bản demo, bước tiếp theo sẽ kết nối API/CRM.') }}><input required placeholder="Họ và tên" /><input required placeholder="Số điện thoại" type="tel" /><select defaultValue=""><option value="" disabled>Nhu cầu của bạn</option><option>Hộ gia đình</option><option>Doanh nghiệp</option><option>Hybrid / Pin lưu trữ</option></select><button className="button button-primary full" type="submit">Gửi yêu cầu →</button></form></div></div>}
+      {leadOpen && <div className="modal-backdrop" onMouseDown={(e) => e.target === e.currentTarget && setLeadOpen(false)}><div className="lead-modal"><button className="modal-close" onClick={() => setLeadOpen(false)}>×</button><span className="kicker">NHẬN TƯ VẤN</span><h2>Để lại thông tin,<br /><em>chúng tôi sẽ liên hệ.</em></h2><form onSubmit={(e) => { e.preventDefault(); setLeadOpen(false); alert('Đã nhận yêu cầu. Đây là bản demo, bước tiếp theo sẽ kết nối API/CRM.') }}><input required placeholder="Họ và tên" /><input required placeholder="Số điện thoại" type="tel" /><select defaultValue=""><option value="" disabled>Nhu cầu của bạn</option><option>Hộ gia đình</option><option>Doanh nghiệp</option><option>Hybrid / Pin lưu trữ</option></select><button className="button button-primary full" type="submit">Gửi yêu cầu tư vấn →</button></form></div></div>}
     </div>
   )
 }
