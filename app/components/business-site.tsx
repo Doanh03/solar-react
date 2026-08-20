@@ -28,6 +28,39 @@ const projects = [
   ['Nhà xưởng', 'Industrial rooftop', 'Thiết kế theo tải, mái và yêu cầu vận hành thực tế.'],
 ];
 
+const motionStyles = `
+@keyframes solarFloat{0%,100%{transform:translate3d(0,0,0) rotate(-8deg) skewY(-18deg)}50%{transform:translate3d(0,-14px,0) rotate(-7deg) skewY(-18deg)}}
+@keyframes solarFloatB{0%,100%{transform:translate3d(0,0,0) rotate(-8deg) skewY(-18deg)}50%{transform:translate3d(-12px,-10px,0) rotate(-10deg) skewY(-18deg)}}
+@keyframes sunPulse{0%,100%{transform:scale(1);opacity:.94}50%{transform:scale(1.06);opacity:1}}
+@keyframes glowDrift{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-28px,24px,0) scale(1.08)}}
+@keyframes cardIn{from{opacity:0;transform:translate3d(0,24px,0) scale(.985)}to{opacity:1;transform:none}}
+@keyframes heroIn{from{opacity:0;transform:translate3d(0,20px,0)}to{opacity:1;transform:none}}
+@keyframes shimmer{0%{background-position:-160% 0}100%{background-position:160% 0}}
+@keyframes ctaPulse{0%,100%{box-shadow:0 14px 40px rgba(8,19,26,.25)}50%{box-shadow:0 18px 48px rgba(8,19,26,.38),0 0 0 8px rgba(201,242,93,.12)}}
+.business-hero:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.28;background-image:linear-gradient(rgba(8,19,26,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(8,19,26,.035) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 82%)}
+.hero-glow{animation:glowDrift 9s ease-in-out infinite}
+.sun{animation:sunPulse 5s ease-in-out infinite}
+.panel-a{animation:solarFloat 6s ease-in-out infinite}
+.panel-b{animation:solarFloatB 7s ease-in-out infinite}
+.energy-card{animation:heroIn .9s cubic-bezier(.2,.8,.2,1) .45s both}
+.hero-copy-business .eyebrow,.hero-copy-business h1,.hero-copy-business>p,.hero-buttons,.hero-proof{animation:heroIn .8s cubic-bezier(.2,.8,.2,1) both}
+.hero-copy-business h1{animation-delay:.08s}.hero-copy-business>p{animation-delay:.16s}.hero-buttons{animation-delay:.24s}.hero-proof{animation-delay:.32s}
+.business-card,.product-card,.project-grid-business article,.project-showcase-grid article,.article-card,.detail-card{animation:cardIn .7s cubic-bezier(.2,.8,.2,1) both}
+.solution-grid-business .business-card:nth-child(2),.product-grid .product-card:nth-child(2),.project-grid-business article:nth-child(2),.article-grid .article-card:nth-child(2){animation-delay:.08s}
+.solution-grid-business .business-card:nth-child(3),.product-grid .product-card:nth-child(3),.project-grid-business article:nth-child(3),.article-grid .article-card:nth-child(3){animation-delay:.16s}
+.solution-grid-business .business-card:nth-child(4),.product-grid .product-card:nth-child(4){animation-delay:.24s}
+.solution-grid-business .business-card:nth-child(5),.product-grid .product-card:nth-child(5){animation-delay:.32s}
+.solution-grid-business .business-card:nth-child(6),.product-grid .product-card:nth-child(6){animation-delay:.40s}
+.business-card:hover,.product-card:hover,.article-card:hover,.detail-card:hover{transform:translateY(-9px) scale(1.012);box-shadow:0 30px 90px rgba(8,19,26,.13);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease,border-color .35s ease}
+.business-card b,.product-card b,.article-card b,.project-grid-business a{transition:transform .3s ease,color .3s ease}.business-card:hover b,.product-card:hover b,.article-card:hover b,.project-grid-business article:hover a{transform:translateX(5px);color:#789e15}
+.button,.nav-cta,.footer-button{position:relative;overflow:hidden}.button:after,.nav-cta:after,.footer-button:after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.28) 48%,transparent 66%);transform:translateX(-140%);transition:transform .7s ease}.button:hover:after,.nav-cta:hover:after,.footer-button:hover:after{transform:translateX(140%)}
+.eyebrow{background:linear-gradient(90deg,#789e15 20%,#c9f25d 50%,#789e15 80%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 4s linear infinite}
+.floating-cta{animation:ctaPulse 3.5s ease-in-out infinite}
+.mobile-nav{display:none}
+@media(max-width:950px){.mobile-nav{display:block;margin-left:auto;position:relative}.mobile-nav>summary{list-style:none;cursor:pointer;border:1px solid rgba(8,19,26,.12);background:rgba(255,255,255,.65);border-radius:999px;padding:10px 13px;font-size:12px;font-weight:850}.mobile-nav>summary::-webkit-details-marker{display:none}.mobile-nav-panel{position:absolute;right:0;top:48px;width:240px;padding:10px;border:1px solid rgba(8,19,26,.10);border-radius:20px;background:rgba(245,247,242,.96);backdrop-filter:blur(18px);box-shadow:0 25px 70px rgba(8,19,26,.18)}.mobile-nav-panel a{display:block;padding:12px 13px;border-radius:12px;font-size:13px;font-weight:700}.mobile-nav-panel a:hover{background:#e9efe9}.business-header .nav-cta{margin-left:0}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+`;
+
 export function BusinessHeader() {
   return <header className="business-header">
     <div className="site-shell nav-wrap">
@@ -40,8 +73,21 @@ export function BusinessHeader() {
         <Link href="/kien-thuc">Kiến thức</Link>
         <Link href="/gioi-thieu">Về chúng tôi</Link>
       </nav>
+      <details className="mobile-nav">
+        <summary>Menu</summary>
+        <div className="mobile-nav-panel">
+          <Link href="/">Trang chủ</Link>
+          <Link href="/lap-dat-dien-mat-troi">Lắp đặt</Link>
+          <Link href="/san-pham">Sản phẩm</Link>
+          <Link href="/du-an">Dự án</Link>
+          <Link href="/kien-thuc">Kiến thức</Link>
+          <Link href="/gioi-thieu">Về chúng tôi</Link>
+          <Link href="/lien-he">Nhận tư vấn</Link>
+        </div>
+      </details>
       <Link className="nav-cta" href="/lien-he">Nhận tư vấn</Link>
     </div>
+    <style jsx global>{motionStyles}</style>
   </header>;
 }
 
