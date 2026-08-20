@@ -7,31 +7,67 @@ import { BusinessFooter, BusinessHeader } from './business-site';
 import styles from './solar-home-v2.module.css';
 
 const stats = [
-  { value: 639672, suffix: ' kWh', label: 'Năng lượng tạo ra hôm nay' },
-  { value: 202576, suffix: ' kWp', label: 'Công suất hệ thống tham khảo' },
-  { value: 1366616, suffix: ' kWh', label: 'Điện mặt trời có thể tự dùng' },
-  { value: 319827, suffix: ' kWh', label: 'Điện năng tích trữ' },
-  { value: 433, suffix: ' tấn', label: 'CO₂ giảm phát thải' },
+  { value: 639672, suffix: ' kWh', label: 'Năng lượng tạo ra hôm nay', delay: 0 },
+  { value: 202576, suffix: ' kWp', label: 'Công suất hệ thống tham khảo', delay: 450 },
+  { value: 1366616, suffix: ' kWh', label: 'Điện mặt trời có thể tự dùng', delay: 900 },
+  { value: 319827, suffix: ' kWh', label: 'Điện năng tích trữ', delay: 1350 },
+  { value: 433, suffix: ' tấn', label: 'CO₂ giảm phát thải', delay: 1800 },
 ];
 
-function AnimatedNumber({ value }: { value: number }) {
+function AnimatedNumber({ value, delay = 0 }: { value: number; delay?: number }) {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    const duration = 1500;
-    const started = performance.now();
     let frame = 0;
-    const tick = (now: number) => {
-      const progress = Math.min(1, (now - started) / duration);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCurrent(Math.round(value * eased));
-      if (progress < 1) frame = requestAnimationFrame(tick);
+    let timeout = 0;
+    const duration = 4200;
+    const start = () => {
+      const started = performance.now();
+      const tick = (now: number) => {
+        const progress = Math.min(1, (now - started) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setCurrent(Math.round(value * eased));
+        if (progress < 1) frame = requestAnimationFrame(tick);
+      };
+      frame = requestAnimationFrame(tick);
     };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [value]);
+    timeout = window.setTimeout(start, delay);
+    return () => {
+      window.clearTimeout(timeout);
+      cancelAnimationFrame(frame);
+    };
+  }, [value, delay]);
 
   return <>{current.toLocaleString('vi-VN')}</>;
+}
+
+function EnergyIcon({ x, y, label, icon }: { x: number; y: number; label: string; icon: string }) {
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      <circle r="23" fill="rgba(7,14,27,.92)" stroke="rgba(104,215,255,.55)" strokeWidth="1.5" />
+      <circle r="29" fill="none" stroke="rgba(255,157,34,.2)" strokeDasharray="2 7">
+        <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="8s" repeatCount="indefinite" />
+      </circle>
+      <text x="0" y="5" textAnchor="middle" fontSize="14" fill="#fff">{icon}</text>
+      <text x="0" y="43" textAnchor="middle" fontSize="7" letterSpacing="1.2" fill="#8d9aaf" fontWeight="700">{label}</text>
+    </g>
+  );
+}
+
+function EnergyStream({ path, delay }: { path: string; delay: string }) {
+  return (
+    <>
+      <path d={path} fill="none" stroke="rgba(104,215,255,.16)" strokeWidth="1" strokeDasharray="4 8" />
+      <circle r="3" fill="#ff9d22" opacity="0">
+        <animateMotion dur="2.8s" begin={delay} repeatCount="indefinite" path={path} />
+        <animate attributeName="opacity" values="0;.95;0" dur="2.8s" begin={delay} repeatCount="indefinite" />
+      </circle>
+      <circle r="7" fill="rgba(255,157,34,.16)" opacity="0">
+        <animateMotion dur="2.8s" begin={delay} repeatCount="indefinite" path={path} />
+        <animate attributeName="opacity" values="0;.45;0" dur="2.8s" begin={delay} repeatCount="indefinite" />
+      </circle>
+    </>
+  );
 }
 
 function Earth() {
@@ -45,6 +81,31 @@ function Earth() {
         <div className={`${styles.earthGrid} ${styles.gridB}`} />
         <div className={styles.earthLand} />
       </div>
+      <svg viewBox="0 0 390 390" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'visible' }}>
+        <defs>
+          <radialGradient id="energyCore" cx="50%" cy="50%">
+            <stop offset="0%" stopColor="#fff4d8" />
+            <stop offset="35%" stopColor="#ffb84a" />
+            <stop offset="100%" stopColor="#ff6b19" stopOpacity="0" />
+          </radialGradient>
+          <filter id="energyBlur"><feGaussianBlur stdDeviation="3" /></filter>
+        </defs>
+        <circle cx="195" cy="195" r="82" fill="url(#energyCore)" opacity=".16" filter="url(#energyBlur)">
+          <animate attributeName="r" values="78;92;78" dur="3.8s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values=".1;.24;.1" dur="3.8s" repeatCount="indefinite" />
+        </circle>
+        <EnergyStream path="M195 195 C145 150 91 112 50 82" delay="0s" />
+        <EnergyStream path="M195 195 C246 150 299 115 340 91" delay=".7s" />
+        <EnergyStream path="M195 195 C150 244 105 276 72 305" delay="1.3s" />
+        <EnergyStream path="M195 195 C245 239 291 269 330 296" delay="1.9s" />
+        <EnergyIcon x={50} y={82} label="NHÀ Ở" icon="⌂" />
+        <EnergyIcon x={340} y={91} label="NHÀ XƯỞNG" icon="▦" />
+        <EnergyIcon x={72} y={305} label="LƯU TRỮ" icon="▣" />
+        <EnergyIcon x={330} y={296} label="GRID" icon="⌁" />
+        <circle cx="195" cy="195" r="9" fill="rgba(255,255,255,.9)" opacity=".08">
+          <animate attributeName="r" values="7;13;7" dur="2.4s" repeatCount="indefinite" />
+        </circle>
+      </svg>
       <span className={`${styles.energyDot} ${styles.dotA}`} />
       <span className={`${styles.energyDot} ${styles.dotB}`} />
       <span className={`${styles.energyDot} ${styles.dotC}`} />
@@ -148,11 +209,11 @@ export function SolarBusinessHomeV2() {
               <div className={styles.commandCard} id="nang-luong">
                 <div className={styles.commandHeader}><div><span>ENERGY COMMAND CENTER</span><strong>Hệ thống năng lượng của bạn, nhìn thấy được.</strong></div><i>LIVE</i></div>
                 <Earth />
-                <div className={`${styles.stat} ${styles.statMain}`}><span>{stats[0].label}</span><strong><AnimatedNumber value={stats[0].value} /><small>{stats[0].suffix}</small></strong><b>MÔ PHỎNG CHỈ SỐ</b></div>
-                <div className={`${styles.stat} ${styles.statTL}`}><span>{stats[1].label}</span><strong><AnimatedNumber value={stats[1].value} /><small>{stats[1].suffix}</small></strong></div>
-                <div className={`${styles.stat} ${styles.statTR}`}><span>{stats[2].label}</span><strong><AnimatedNumber value={stats[2].value} /><small>{stats[2].suffix}</small></strong></div>
-                <div className={`${styles.stat} ${styles.statBL}`}><span>{stats[3].label}</span><strong><AnimatedNumber value={stats[3].value} /><small>{stats[3].suffix}</small></strong></div>
-                <div className={`${styles.stat} ${styles.statBR}`}><span>{stats[4].label}</span><strong><AnimatedNumber value={stats[4].value} /><small>{stats[4].suffix}</small></strong></div>
+                <div className={`${styles.stat} ${styles.statMain}`}><span>{stats[0].label}</span><strong><AnimatedNumber value={stats[0].value} delay={stats[0].delay} /><small>{stats[0].suffix}</small></strong><b>CHỈ SỐ MÔ PHỎNG</b></div>
+                <div className={`${styles.stat} ${styles.statTL}`}><span>{stats[1].label}</span><strong><AnimatedNumber value={stats[1].value} delay={stats[1].delay} /><small>{stats[1].suffix}</small></strong></div>
+                <div className={`${styles.stat} ${styles.statTR}`}><span>{stats[2].label}</span><strong><AnimatedNumber value={stats[2].value} delay={stats[2].delay} /><small>{stats[2].suffix}</small></strong></div>
+                <div className={`${styles.stat} ${styles.statBL}`}><span>{stats[3].label}</span><strong><AnimatedNumber value={stats[3].value} delay={stats[3].delay} /><small>{stats[3].suffix}</small></strong></div>
+                <div className={`${styles.stat} ${styles.statBR}`}><span>{stats[4].label}</span><strong><AnimatedNumber value={stats[4].value} delay={stats[4].delay} /><small>{stats[4].suffix}</small></strong></div>
                 <div className={styles.commandFooter}><span>● Chỉ số minh hoạ • Không phải số liệu thương mại</span><Link href="/lien-he">Nhận cấu hình thực tế →</Link></div>
               </div>
             </div>
