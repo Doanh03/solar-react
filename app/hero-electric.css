@@ -1,50 +1,27 @@
-/* Hero-only electrical pulse layer. Imported after the existing motion styles. */
-@keyframes solarCurrentFlow {
-  from { stroke-dashoffset: 0; }
-  to { stroke-dashoffset: -34; }
-}
+/* Hero electrical atmosphere + motion layer. Imported after the existing motion styles. */
+@keyframes solarCurrentFlow{from{stroke-dashoffset:0}to{stroke-dashoffset:-34}}
+@keyframes solarCurrentFlash{0%,72%,100%{opacity:.2;stroke-width:1}75%{opacity:1;stroke-width:2.4}78%{opacity:.34;stroke-width:1.1}81%{opacity:.92;stroke-width:2}84%{opacity:.2;stroke-width:1}}
+@keyframes solarCoreFlash{0%,68%,100%{opacity:.12}72%{opacity:.42}75%{opacity:.1}78%{opacity:.38}82%{opacity:.12}}
+@keyframes solarRingSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes solarRingReverse{to{transform:translate(-50%,-50%) rotate(-360deg)}}
+@keyframes solarCardSweep{to{transform:rotate(360deg)}}
 
-@keyframes solarCurrentFlash {
-  0%, 72%, 100% { opacity: .24; stroke-width: 1; }
-  75% { opacity: .95; stroke-width: 2.2; }
-  78% { opacity: .38; stroke-width: 1.2; }
-  81% { opacity: .9; stroke-width: 1.9; }
-  84% { opacity: .24; stroke-width: 1; }
-}
+svg[viewBox="0 0 390 390"] path{stroke:#74e8ff!important;stroke-dasharray:3 7 1 10;stroke-dashoffset:0;filter:drop-shadow(0 0 3px rgba(116,232,255,.65)) drop-shadow(0 0 8px rgba(255,157,34,.3));animation:solarCurrentFlow 2.8s linear infinite,solarCurrentFlash 4.6s ease-in-out infinite}
+svg[viewBox="0 0 390 390"] path:nth-of-type(2){animation-delay:-.7s,.9s}svg[viewBox="0 0 390 390"] path:nth-of-type(3){animation-delay:-1.3s,1.7s}svg[viewBox="0 0 390 390"] path:nth-of-type(4){animation-delay:-1.9s,2.5s}
+svg[viewBox="0 0 390 390"] circle[fill="url(#energyCore)"]{animation:solarCoreFlash 3.8s ease-in-out infinite;filter:drop-shadow(0 0 7px rgba(255,186,74,.75))}
 
-@keyframes solarCoreFlash {
-  0%, 68%, 100% { opacity: .16; }
-  72% { opacity: .38; }
-  75% { opacity: .12; }
-  78% { opacity: .34; }
-  82% { opacity: .16; }
-}
+/* Premium energy halo around the real Earth stage. */
+[class*="earthStage"]{filter:drop-shadow(0 0 20px rgba(92,221,255,.08));isolation:isolate}
+[class*="earthStage"]:before{content:"";position:absolute;left:50%;top:50%;width:330px;height:330px;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(115,232,255,.2);border-top-color:rgba(255,187,84,.95);border-right-color:transparent;box-shadow:0 0 24px rgba(115,232,255,.1),inset 0 0 24px rgba(255,157,34,.035);pointer-events:none;z-index:4;animation:solarRingSpin 5.5s linear infinite}
+[class*="earthStage"]:after{content:"";position:absolute;left:50%;top:50%;width:292px;height:292px;transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(255,187,84,.18);border-left-color:rgba(115,232,255,.58);border-bottom-color:transparent;pointer-events:none;z-index:4;animation:solarRingReverse 7.5s linear infinite}
 
-/* The four existing Earth-to-node paths become the visible electrical conduits. */
-svg[viewBox="0 0 390 390"] path {
-  stroke-dasharray: 3 7 1 10;
-  stroke-dashoffset: 0;
-  filter: drop-shadow(0 0 3px rgba(255,157,34,.45));
-  animation: solarCurrentFlow 2.8s linear infinite, solarCurrentFlash 4.6s ease-in-out infinite;
-}
+/* Subtle scanning field inside the command card. */
+[class*="commandCard"]:before{content:"";position:absolute;inset:-30%;background:conic-gradient(from 20deg,transparent 0 18%,rgba(115,232,255,.07) 20%,transparent 25% 48%,rgba(255,157,34,.055) 50%,transparent 56% 100%);animation:solarCardSweep 15s linear infinite;pointer-events:none}
+[class*="commandCard"]:after{content:"";position:absolute;left:8%;right:8%;top:16%;height:68%;background:radial-gradient(circle at 50% 50%,rgba(255,157,34,.12),transparent 30%),radial-gradient(circle at 50% 50%,rgba(115,232,255,.09),transparent 57%);filter:blur(20px);pointer-events:none}
+[class*="commandCard"] [class*="commandHeader"]{z-index:10}
+[class*="stat"]{border-color:rgba(115,232,255,.13)!important;background:rgba(5,11,20,.68)!important;box-shadow:0 18px 45px rgba(0,0,0,.28),0 0 24px rgba(115,232,255,.035)!important}
+[class*="statMain"]{border-color:rgba(255,179,71,.25)!important;box-shadow:0 18px 50px rgba(0,0,0,.3),0 0 30px rgba(255,157,34,.07)!important}
+[class*="energyDot"]{width:5px!important;height:5px!important;background:#c3f7ff!important;box-shadow:0 0 10px 2px rgba(115,232,255,.9),0 0 24px rgba(255,157,34,.45)!important}
 
-svg[viewBox="0 0 390 390"] path:nth-of-type(2) { animation-delay: -.7s, .9s; }
-svg[viewBox="0 0 390 390"] path:nth-of-type(3) { animation-delay: -1.3s, 1.7s; }
-svg[viewBox="0 0 390 390"] path:nth-of-type(4) { animation-delay: -1.9s, 2.5s; }
-
-svg[viewBox="0 0 390 390"] circle[fill="url(#energyCore)"] {
-  animation: solarCoreFlash 3.8s ease-in-out infinite;
-}
-
-@media (max-width: 640px) {
-  svg[viewBox="0 0 390 390"] path {
-    filter: drop-shadow(0 0 2px rgba(255,157,34,.4));
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  svg[viewBox="0 0 390 390"] path,
-  svg[viewBox="0 0 390 390"] circle[fill="url(#energyCore)"] {
-    animation: none;
-  }
-}
+@media(max-width:640px){svg[viewBox="0 0 390 390"] path{filter:drop-shadow(0 0 2px rgba(116,232,255,.55))}[class*="earthStage"]:before{width:255px;height:255px}[class*="earthStage"]:after{width:225px;height:225px}}
+@media(prefers-reduced-motion:reduce){svg[viewBox="0 0 390 390"] path,svg[viewBox="0 0 390 390"] circle[fill="url(#energyCore)"],[class*="earthStage"]:before,[class*="earthStage"]:after,[class*="commandCard"]:before{animation:none}}
