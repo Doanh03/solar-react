@@ -1,49 +1,65 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./hero-v2.module.css";
 
-const metrics = [
-  ["Công suất lắp đặt", "202.580,6", "kWp"],
-  ["Tổng sản lượng tiêu thụ khách hàng", "1.366.671", "kWh"],
-  ["Điện đang tích trữ", "319.852", "kWh"],
-  ["Doanh thu hôm nay", "1,95", "tỷ"],
-  ["CO₂ giảm phát thải hôm nay", "433,2", "tấn"],
+const baseMetrics = [
+  ["Công suất lắp đặt", 202580.6, "kWp", 0.1],
+  ["Tổng sản lượng tiêu thụ khách hàng", 1366671, "kWh", 1],
+  ["Điện đang tích trữ", 319852, "kWh", 1],
+  ["Doanh thu hôm nay", 1.95, "tỷ", 0.01],
+  ["CO₂ giảm phát thải hôm nay", 433.2, "tấn", 0.1],
 ] as const;
 
 const nodes = ["HOME", "FACTORY", "BATTERY", "GRID"] as const;
 const START_OUTPUT = 639_772;
 
-function formatKwh(value: number) {
-  return new Intl.NumberFormat("vi-VN").format(value);
+function formatMetric(value: number, step: number) {
+  return step < 1
+    ? new Intl.NumberFormat("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value)
+    : new Intl.NumberFormat("vi-VN").format(Math.round(value));
 }
 
 export default function HeroV2() {
   const [activeNode, setActiveNode] = useState<(typeof nodes)[number] | null>(null);
+  const [metrics, setMetrics] = useState(baseMetrics.map(([, value]) => value));
   const [output, setOutput] = useState(START_OUTPUT);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [pulse, setPulse] = useState(0);
 
   useEffect(() => {
-    let index = 0;
-    const run = () => {
-      setActiveNode(nodes[index]);
-      timer.current = setTimeout(() => {
-        setActiveNode(null);
-        timer.current = setTimeout(() => {
-          index = (index + 1) % nodes.length;
-          run();
-        }, 1200);
-      }, 2200);
-    };
-    run();
-    return () => {
-      if (timer.current) clearTimeout(timer.current);
-    };
+    const interval = window.setInterval(() => {
+      setOutput((value) => value + 1);
+      setMetrics((values) => values.map((value, index) => value + baseMetrics[index][3]));
+    }, 1000);
+    return () => window.clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    const interval = window.setInterval(() => setOutput((value) => value + 1), 500);
-    return () => window.clearInterval(interval);
+    let nodeIndex = 0;
+    let travelTimer: number | undefined;
+    let pauseTimer: number | undefined;
+
+    const clearTimers = () => {
+      if (travelTimer) window.clearTimeout(travelTimer);
+      if (pauseTimer) window.clearTimeout(pauseTimer);
+    };
+
+    const run = () => {
+      const node = nodes[nodeIndex];
+      setActiveNode(null);
+      setPulse((value) => value + 1);
+
+      travelTimer = window.setTimeout(() => {
+        setActiveNode(node);
+        pauseTimer = window.setTimeout(() => {
+          nodeIndex = (nodeIndex + 1) % nodes.length;
+          run();
+        }, 1300);
+      }, 1100);
+    };
+
+    run();
+    return clearTimers;
   }, []);
 
   return (
@@ -54,7 +70,7 @@ export default function HeroV2() {
         <p>Giải pháp điện mặt trời thông minh cho gia đình, doanh nghiệp và nhà xưởng.</p>
       </div>
 
-      <div className={`${styles.planetStage} ${activeNode ? styles.stageActive : ""}`} data-active={activeNode ?? "idle"} aria-label="Energy Planet">
+      <div className={styles.planetStage} data-active={activeNode ?? "idle"} data-pulse={pulse} aria-label="Energy Planet">
         <div className={styles.atmosphere} />
         <div className={styles.planet}>
           <div className={styles.terminator} />
@@ -64,10 +80,9 @@ export default function HeroV2() {
           <span className={`${styles.orbit} ${styles.orbitB}`} />
         </div>
 
-        <span className={`${styles.energyParticle} ${styles.energyHome}`} aria-hidden="true" />
-        <span className={`${styles.energyParticle} ${styles.energyFactory}`} aria-hidden="true" />
-        <span className={`${styles.energyParticle} ${styles.energyBattery}`} aria-hidden="true" />
-        <span className={`${styles.energyParticle} ${styles.energyGrid}`} aria-hidden="true" />
+        {Array.from({ length: 7 }, (_, index) => (
+          <span key={index} className={styles.energyTrailParticle} style={{ ["--trail-delay" as string]: `${index * 90}ms` }} aria-hidden="true" />
+        ))}
 
         {nodes.map((node) => (
           <div key={node} className={`${styles.node} ${activeNode === node ? styles.nodeActive : ""} ${styles[`node${node}`]}`}>
@@ -83,15 +98,15 @@ export default function HeroV2() {
         ))}
 
         <div className={styles.heroMetric}>
-          <strong>{formatKwh(output)}</strong><span>kWh</span>
+          <strong>{new Intl.NumberFormat("vi-VN").format(output)}</strong><span>kWh</span>
           <small>SẢN LƯỢNG ĐIỆN MẶT TRỜI HÔM NAY</small>
         </div>
       </div>
 
       <div className={styles.dataRail}>
-        {metrics.map(([label, value, unit]) => (
+        {baseMetrics.map(([label, , unit, step], index) => (
           <div className={styles.metric} key={label}>
-            <strong>{value}</strong><span>{unit}</span>
+            <strong>{formatMetric(metrics[index], step)}</strong><span>{unit}</span>
             <small>{label}</small>
           </div>
         ))}
